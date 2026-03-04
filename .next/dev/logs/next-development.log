@@ -1,2 +1,39 @@
-[00:00:01.004] Server  LOG     ✓ Ready in 680ms
-[00:00:19.244] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:01.210] Server  LOG     ✓ Ready in 877ms
+[00:00:02.128] Server  ERROR   ⨯ ./src/app/page.tsx:146:2
+Parsing ecmascript source code failed
+  144 |     </main>
+  145 |   );
+> 146 | }
+      |  ^
+
+Expected '}', got '<eof>'
+
+
+[00:00:02.708] Browser ERROR   uncaughtError: Error: ./src/app/page.tsx:146:2
+Parsing ecmascript source code failed
+  144 |     </main>
+  145 |   );
+> 146 | }
+      |  ^
+
+Expected '}', got '<eof>'
+
+
+[00:00:02.862] Browser ERROR   ./src/app/page.tsx:146:2
+Parsing ecmascript source code failed
+  144 |     </main>
+  145 |   );
+> 146 | }
+      |  ^
+
+Expected '}', got '<eof>'
+[00:00:03.125] Browser ERROR   ./src/app/page.tsx:146:2
+Parsing ecmascript source code failed
+  144 |     </main>
+  145 |   );
+> 146 | }
+      |  ^
+
+Expected '}', got '<eof>'
+[00:08:20.044] Server  LOG     ✓ Compiled in 45ms
+[00:08:20.551] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
