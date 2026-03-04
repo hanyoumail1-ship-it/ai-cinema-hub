@@ -6,6 +6,10 @@ import { Box, User, Film, X } from "lucide-react";
 
 export default function Home() {
   const [selectedVideo, setSelectedVideo] = useState<typeof movies[0] | null>(null);
+  const getYouTubeId = (url: string) => {
+    const regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : null;
 
   return (
     <main className="min-h-screen bg-[#020617] text-white">
@@ -38,10 +42,12 @@ export default function Home() {
 
         {/* --- 動画グリッド（スマホ対応） --- */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {movies.map((movie) => {
-            // YouTubeのURLからサムネイルURLを生成
-            const videoId = movie.url.split("v=")[1]?.split("&")[0];
-            const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+        {movies.map((movie) => {
+  const videoId = getYouTubeId(movie.url);
+  // hqdefault よりも確実な mqdefault（中解像度）を使用します
+  const thumbnailUrl = videoId 
+    ? `https://img.youtube.com/vi/${videoId}/mqdefault.jpg` 
+    : "/api/placeholder/400/225"; // 万が一の時の予備画像
 
             return (
               <button
