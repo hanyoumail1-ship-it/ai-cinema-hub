@@ -19,14 +19,14 @@ export const movies: Movie[] = [
   {
     id: "2",
     title: "AIにドッキリ番組作らせたらすごいことになった",
-    url: "https://www.youtube.com/watch?v=R_0e_u8Dqsc",
+    url: "https://www.youtube.com/watch?v=QxYiiQ0eZyM&t=2s",
     creator: "きびまら",
     tool: "Mixed AI",
   },
   {
     id: "3",
     title: "AIが考えた放送事故",
-    url: "https://www.youtube.com/watch?v=Cq3B5DqXW9A",
+    url: "https://www.youtube.com/watch?v=YHsfqcVS76I&t=6s",
     creator: "パロディちゃん / Parody-chan",
     tool: "Mixed AI",
   },
