@@ -50,7 +50,8 @@ export const movies: Movie[] = [
     url: "https://www.tiktok.com/@music_chill.026/video/7611894434828963090",
     creator: "music_chill.026",
     tool: "AI Music",
-    type: 'tiktok'
+    type: 'tiktok',
+    thumbnailUrl: "/thumbnails/tk2.jpg" 
   },
   {
     id: "tk3",
@@ -58,7 +59,8 @@ export const movies: Movie[] = [
     url: "https://www.tiktok.com/@lios_secondacc/video/7612560997290740999",
     creator: "lios_secondacc",
     tool: "AI Animation",
-    type: 'tiktok'
+    type: 'tiktok',
+    thumbnailUrl: "/thumbnails/tk3.jpg" 
   }
 ];
 
