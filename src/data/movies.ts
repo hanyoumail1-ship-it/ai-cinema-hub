@@ -41,7 +41,7 @@ export const movies: Movie[] = [
     url: "https://www.tiktok.com/@riotsukatsuki34/video/7611288886366506261",
     creator: "riotsukatsuki34",
     tool: "AI Video",
-    type: 'tiktok'
+    type: 'tiktok',
     thumbnailUrl: "/thumbnails/tk1.jpg"       
   },
   {
