@@ -47,9 +47,9 @@ export default function Home() {
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {movies.map((movie) => {
             const videoId = getYouTubeId(movie.url);
-            const thumbnailUrl = videoId 
+            const thumbnailUrl = movie.thumbnailUrl || (videoId 
               ? `https://img.youtube.com/vi/${videoId}/mqdefault.jpg` 
-              : "https://via.placeholder.com/480x270/0f172a/ffffff?text=No+Thumbnail";
+              : "https://via.placeholder.com/480x270/0f172a/ffffff?text=No+Thumbnail");
 
             return (
               <button

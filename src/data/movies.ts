@@ -7,6 +7,7 @@ export interface Movie {
   creator: string;
   tool: string;
   type: 'youtube' | 'tiktok';
+  thumbnailUrl?: string;
   }
 
 export const movies: Movie[] = [
@@ -41,6 +42,7 @@ export const movies: Movie[] = [
     creator: "riotsukatsuki34",
     tool: "AI Video",
     type: 'tiktok'
+    thumbnailUrl: "/thumbnails/tk1.jpg"       
   },
   {
     id: "tk2",
