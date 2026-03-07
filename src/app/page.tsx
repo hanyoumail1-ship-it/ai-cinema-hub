@@ -91,45 +91,66 @@ export default function Home() {
 
       {/* --- ポップアップ（モーダル） --- */}
       {selectedVideo && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm">
-          <div className="relative w-full max-w-4xl overflow-hidden rounded-2xl bg-[#0f172a] shadow-2xl">
-            <button
-              onClick={() => setSelectedVideo(null)}
-              className="absolute right-4 top-4 z-50 rounded-full bg-black/50 p-2 text-white hover:bg-white/20 transition-colors"
-            >
-              <X className="h-6 w-6" />
-            </button>
-            <div className="aspect-video w-full">
-              <iframe
-                src={`https://www.youtube.com/embed/${getYouTubeId(selectedVideo.url)}?autoplay=1`}
-                className="h-full w-full"
-                allow="autoplay; encrypted-media"
-                allowFullScreen
-              />
-            </div>
-            <div className="p-6">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div>
-                  <h2 className="text-xl font-bold">{selectedVideo.title}</h2>
-                  <div className="mt-2 flex items-center gap-3 text-sm text-gray-400">
-                    <span className="flex items-center gap-1"><User className="h-4 w-4" /> {selectedVideo.creator}</span>
-                    <span className="rounded-md bg-blue-500/10 px-2 py-0.5 text-xs text-blue-400 border border-blue-500/20">{selectedVideo.tool}</span>
-                  </div>
-                </div>
-                <a 
-                  href={selectedVideo.url} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 rounded-full bg-red-600 px-6 py-2.5 text-sm font-bold text-white hover:bg-red-700 transition-all hover:scale-105 active:scale-95 shadow-lg shadow-red-600/20"
-                >
-                  <Film className="h-4 w-4" />
-                  YouTubeで視聴する
-                </a>
-              </div>
+  <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm">
+    <div className="relative w-full max-w-4xl overflow-hidden rounded-2xl bg-[#0f172a] shadow-2xl">
+      {/* 閉じるボタン */}
+      <button
+        onClick={() => setSelectedVideo(null)}
+        className="absolute right-4 top-4 z-50 rounded-full bg-black/50 p-2 text-white hover:bg-white/20 transition-colors"
+      >
+        <X className="h-6 w-6" />
+      </button>
+
+      {/* 動画プレイヤー：YouTubeかTikTokかで中身を切り替え */}
+      <div className={`w-full bg-black flex items-center justify-center ${
+        selectedVideo.type === 'tiktok' ? 'aspect-[9/16] max-h-[70vh]' : 'aspect-video'
+      }`}>
+        {selectedVideo.type === 'youtube' ? (
+          <iframe
+            src={`https://www.youtube.com/embed/${getYouTubeId(selectedVideo.url)}?autoplay=1`}
+            className="h-full w-full"
+            allow="autoplay; encrypted-media"
+            allowFullScreen
+          />
+        ) : (
+          <iframe
+            src={`https://www.tiktok.com/embed/v2/${selectedVideo.url.split('/video/')[1]}`}
+            className="h-full w-full"
+            allow="fullscreen"
+          />
+        )}
+      </div>
+
+      {/* 情報とボタン */}
+      <div className="p-6">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h2 className="text-xl font-bold">{selectedVideo.title}</h2>
+            <div className="mt-2 flex items-center gap-3 text-sm text-gray-400">
+              <span className="flex items-center gap-1"><User className="h-4 w-4" /> {selectedVideo.creator}</span>
+              <span className="rounded-md bg-blue-500/10 px-2 py-0.5 text-xs text-blue-400 border border-blue-500/20">{selectedVideo.tool}</span>
             </div>
           </div>
+          
+          {/* ボタンの文字と色を動的に変更 */}
+          <a 
+            href={selectedVideo.url} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className={`flex items-center justify-center gap-2 rounded-full px-6 py-2.5 text-sm font-bold text-white transition-all hover:scale-105 active:scale-95 shadow-lg ${
+              selectedVideo.type === 'youtube' 
+                ? 'bg-red-600 hover:bg-red-700 shadow-red-600/20' 
+                : 'bg-zinc-800 hover:bg-black shadow-zinc-900/40'
+            }`}
+          >
+            <Film className="h-4 w-4" />
+            {selectedVideo.type === 'youtube' ? 'YouTubeで視聴する' : 'TikTokで視聴する'}
+          </a>
         </div>
-      )}
+      </div>
+    </div>
+  </div>
+)}
     </main>
   );
 }
