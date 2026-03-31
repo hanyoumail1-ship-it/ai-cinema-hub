@@ -36,9 +36,14 @@ export default function Home() {
     });
     setMovieList(updatedList);
   };
-
-  fetchLikes();
-}, []);    
+    fetchLikes();
+}, []); 
+const aiTools = [
+  { name: 'Luma Dream Machine', url: 'https://lumalabs.ai/', desc: '超リアルな動画生成' },
+  { name: 'Runway Gen-3', url: 'https://runwayml.com/', desc: 'プロ御用達の多機能AI' },
+  { name: 'Kling AI', url: 'https://klingai.com/', desc: '驚異の10秒動画生成' },
+  { name: 'Pika Art', url: 'https://pika.art/', desc: 'アニメ・可愛い表現に強い' },
+];
 
   // 1. YouTube IDを取得する最強の関数
   const getYouTubeId = (url: string) => {
@@ -57,8 +62,15 @@ export default function Home() {
   }
 };
 
+const tagCounts = movieList.reduce((acc, item) => {
+  item.tags?.forEach(tag => {
+    // すでにそのタグが箱にあれば +1、なければ 1 にする
+    acc[tag] = (acc[tag] || 0) + 1;
+  });
+  return acc;
+}, {} as Record<string, number>);
 const filteredMovies = movieList.filter(movie => {
-    // ① カテゴリが一致するか？
+      // ① カテゴリが一致するか？
   const matchesCategory = filter === 'all' || movie.category === filter;
     // ② タイトルまたは作者名に検索ワードが含まれているか？（大文字小文字を区別しない）
   const matchesSearch = 
@@ -204,38 +216,44 @@ const sortedMovies = [...filteredMovies].sort((a, b) => {
   ))}
 </div>
 
-{/* --- ジャンルタグ（横並び） --- */}
-<div className="mb-8 flex flex-wrap justify-center gap-2">
-  <button
-    onClick={() => setSelectedTag('all')}
-    className={`px-3 py-1 rounded-md text-xs transition-all ${
-      selectedTag === 'all' ? 'bg-blue-600 text-white' : 'bg-white/5 text-gray-400 hover:text-white'
-    }`}
-  >
-    #すべて
-  </button>
-  
-  {/* 全データからタグを自動抽出して表示 */}
-  {Array.from(new Set(movieList.flatMap(m => m.tags || []))).map(tag => {
-  // 1. そのタグを持っているアイテムがリストにいくつあるか計算する
-  const count = movieList.filter(m => m.tags?.includes(tag)).length;
-
-  return (
-    <button
-      key={tag}
-      onClick={() => setSelectedTag(tag)}
-      className={`px-3 py-1 rounded-md text-xs transition-all ${
-        selectedTag === tag ? 'bg-blue-600 text-white' : 'bg-white/5 text-gray-400 hover:text-white'
+{/* flex-nowrap : 折り返さずに横一列に並べる
+  overflow-x-auto : はみ出た分をスクロール可能にする
+  pb-2 : スクロールバーがボタンに被らないように少し下に隙間を作る
+  scrollbar-hide : (オプション) スクロールバーを隠してスッキリさせる
+*/}
+<div className="flex flex-nowrap overflow-x-auto gap-2 pb-2 mb-6 px-4 md:justify-center scrollbar-hide mx-auto max-w-full">
+  {/* 「すべて」ボタン */}
+  <button 
+      onClick={() => setSelectedTag('all')}
+      className={`flex-shrink-0 px-3 py-1 rounded-md text-xs transition-all ${
+        selectedTag === 'all' ? 'bg-blue-600 text-white' : 'bg-white/5 text-gray-400 hover:text-white'
       }`}
     >
-      #{tag} ({count}) {/* ← ここで件数を表示 */}
-    </button>
-  );
-})}
-</div>
+    #すべて ({movieList.length})
+  </button>
+  
+  {/* 各タグボタン */}
+  {Array.from(new Set(movieList.flatMap(m => m.tags || []))).map(tag => (
+      <button
+        key={tag}
+        onClick={() => setSelectedTag(tag)}
+        className={`flex-shrink-0 px-3 py-1 rounded-md text-xs transition-all ${
+          selectedTag === tag ? 'bg-blue-600 text-white' : 'bg-white/5 text-gray-400 hover:text-white'
+        }`}
+      >
+        #{tag} ({tagCounts[tag] || 0})
+      </button>
+    ))}
+  </div>
 
         {/* --- 動画グリッド --- */}
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {/* grid-cols-1 : 基本（スマホ）は1列
+  sm:grid-cols-2 : 640px以上（タブレット）になったら2列
+  lg:grid-cols-3 : 1024px以上（PC）になったら3列
+  gap-4 : スマホでは隙間を少し狭く(16px)
+  sm:gap-6 : 画面が広くなったら隙間も広く(24px)
+*/}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {sortedMovies.map((movie) => {
     const videoId = getYouTubeId(movie.url);
     const thumbnailUrl = movie.thumbnailUrl || (videoId 
@@ -322,6 +340,37 @@ const sortedMovies = [...filteredMovies].sort((a, b) => {
   })}
 </div>
       </div>
+      {/* --- AIツール・リンク集セクション --- */}
+<section className="mt-20 border-t border-white/10 pt-10 pb-20">
+  <h2 className="text-xl font-bold mb-6 text-center text-blue-400">Creator's Resources</h2>
+  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 px-4 max-w-6xl mx-auto">
+    {aiTools.map((tool) => (
+      <a
+      key={tool.name}
+      href={tool.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group p-4 rounded-xl bg-white/5 border border-white/10 hover:border-blue-500/50 transition-all hover:bg-blue-500/5 flex items-center gap-3"
+    >
+      {/* --- ロゴ表示部分 --- */}
+      <div className="flex-shrink-0 w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center overflow-hidden">
+        <img
+          src={`https://www.google.com/s2/favicons?domain=${new URL(tool.url).hostname}&sz=64`}
+          alt={`${tool.name} logo`}
+          className="w-5 h-5 object-contain"
+        />
+      </div>
+  
+      <div>
+        <h3 className="text-sm font-bold text-gray-200 group-hover:text-blue-400 transition-colors">
+          {tool.name}
+        </h3>
+        <p className="text-[10px] text-gray-500 mt-0.5">{tool.desc}</p>
+      </div>
+    </a>
+  ))}
+  </div>
+</section>
       {/* --- ポップアップ（モーダル） --- */}
       {selectedVideo && (
   <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm">
