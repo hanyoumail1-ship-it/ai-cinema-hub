@@ -101,18 +101,18 @@ export const movies: Movie[] = [
     creator: "とうや【AIイラストLab.】",
     tool: "another",
     type: 'youtube',
-    tags: ["解説"],
+    tags: ["解説",],
     category: 'tutorial',
     likes: 0
   },
   {
     id: "6",
-    title: "Sora2の能力を引き出すプロンプト術 1枚の画像からリール動画を生成する方法",
-    url: "https://www.youtube.com/watch?v=m9PwlpHOvI0",
-    creator: "Dr.slump-J / クリエイティブツール解説",
+    title: "遂に人間不要!動画生成AI PIKAを使い倒すぞ!",
+    url: "https://www.youtube.com/watch?v=z0lI-Do62rY",
+    creator: "Hack Maaa",
     tool: "another",
     type: 'youtube',
-    tags: ["解説",],
+    tags: ["解説","Pika"],
     category: 'tutorial',
     likes: 0
   },
@@ -169,6 +169,39 @@ export const movies: Movie[] = [
     type: 'youtube',
     tags: ["アニメ", "ぐぐがが",],
     category: 'movie',
+    likes: 0
+  },
+  {
+    id: "12",
+    title: "【2025年版】初心者向けRunway完全ガイド イラスト生成・動画生成・うまく作るコツまで",
+    url: "https://www.youtube.com/watch?v=1q0LOyUHwYA",
+    creator: "AI たろう",
+    tool: "another",
+    type: 'youtube',
+    tags: ["解説", "Runway",],
+    category: 'tutorial',
+    likes: 0
+  },
+  {
+    id: "13",
+    title: "Dream Machine使い方解説 初心者でも簡単AI動画制作",
+    url: "https://www.youtube.com/watch?v=HsDzpFTaZGE",
+    creator: "HARUTA",
+    tool: "another",
+    type: 'youtube',
+    tags: ["解説", "luma",],
+    category: 'tutorial',
+    likes: 0
+  },
+  {
+    id: "14",
+    title: "Kling AIの使い方を完全解説!プロンプトのコツ&チュートリアルあり",
+    url: "https://www.youtube.com/watch?v=MU8HFoxyQ6g",
+    creator: "NOMAN AI",
+    tool: "another",
+    type: 'youtube',
+    tags: ["解説", "Kling AI",],
+    category: 'tutorial',
     likes: 0
   },
 ];
