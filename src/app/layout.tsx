@@ -7,22 +7,33 @@ export const metadata: Metadata = {
     default: "AI CINEMA HUB - 次世代AI映画・動画の投稿共有プラットフォーム",
     template: "%s | AI CINEMA HUB"
   },
-  // 2. 説明文：コンセプト（映画版PIXIV）を意識した魅力的な文章
+  
+  // 2. 説明文・キーワード
   description: "生成AI（Luma, Runway, Sora等）から生まれた最先端の映像作品が集まるハブ。クリエイターの情熱が交差する、AI映画の新しい表現の場です。",
   keywords: ["AI映画", "AI動画", "生成AI", "Luma", "Runway", "Sora", "AI CINEMA HUB"],
   
-  // 3. SNS設定（XやLINEでシェアした時に表示される内容）
+  // 3. SNS設定
   openGraph: {
     title: "AI CINEMA HUB",
     description: "次世代AI映画・動画の投稿共有プラットフォーム",
+    url: "https://ai-cinema-hub-m53x.vercel.app/", // サイトのURL
     siteName: "AI CINEMA HUB",
     locale: "ja_JP",
     type: "website",
+    images: [
+      {
+        url: "/opengraph-image.png", // ★ publicに入れた画像名と一致させる
+        width: 1200,
+        height: 630,
+        alt: "AI CINEMA HUB プレビュー画像",
+      },
+    ],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary_large_image", // ★ Xで画像を大きく表示させる設定
     title: "AI CINEMA HUB",
     description: "次世代AI映画・動画の投稿共有プラットフォーム",
+    images: ["/opengraph-image.png"], // ★ ここにも画像を指定
   },
 };
 
@@ -33,11 +44,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja" className="dark">
-      {/* 背景色を、より映画館らしい深い濃紺（#020617）に変更しました */}
       <body className="min-h-screen bg-[#020617] text-gray-100 antialiased selection:bg-blue-500/30">
         {children}
       </body>
     </html>
   );
 }
-

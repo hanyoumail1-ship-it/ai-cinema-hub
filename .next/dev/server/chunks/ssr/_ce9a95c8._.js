@@ -17,7 +17,7 @@ const metadata = {
         default: "AI CINEMA HUB - 次世代AI映画・動画の投稿共有プラットフォーム",
         template: "%s | AI CINEMA HUB"
     },
-    // 2. 説明文：コンセプト（映画版PIXIV）を意識した魅力的な文章
+    // 2. 説明文・キーワード
     description: "生成AI（Luma, Runway, Sora等）から生まれた最先端の映像作品が集まるハブ。クリエイターの情熱が交差する、AI映画の新しい表現の場です。",
     keywords: [
         "AI映画",
@@ -28,18 +28,30 @@ const metadata = {
         "Sora",
         "AI CINEMA HUB"
     ],
-    // 3. SNS設定（XやLINEでシェアした時に表示される内容）
+    // 3. SNS設定
     openGraph: {
         title: "AI CINEMA HUB",
         description: "次世代AI映画・動画の投稿共有プラットフォーム",
+        url: "https://ai-cinema-hub-m53x.vercel.app/",
         siteName: "AI CINEMA HUB",
         locale: "ja_JP",
-        type: "website"
+        type: "website",
+        images: [
+            {
+                url: "/opengraph-image.png",
+                width: 1200,
+                height: 630,
+                alt: "AI CINEMA HUB プレビュー画像"
+            }
+        ]
     },
     twitter: {
         card: "summary_large_image",
         title: "AI CINEMA HUB",
-        description: "次世代AI映画・動画の投稿共有プラットフォーム"
+        description: "次世代AI映画・動画の投稿共有プラットフォーム",
+        images: [
+            "/opengraph-image.png"
+        ]
     }
 };
 function RootLayout({ children }) {
@@ -51,12 +63,12 @@ function RootLayout({ children }) {
             children: children
         }, void 0, false, {
             fileName: "[project]/src/app/layout.tsx",
-            lineNumber: 37,
+            lineNumber: 47,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/app/layout.tsx",
-        lineNumber: 35,
+        lineNumber: 46,
         columnNumber: 5
     }, this);
 }
