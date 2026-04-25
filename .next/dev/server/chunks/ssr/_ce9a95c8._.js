@@ -12,6 +12,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 ;
 ;
 const metadata = {
+    metadataBase: new URL("https://ai-cinema-hub-m53x.vercel.app"),
     // 1. タイトル：検索されやすく、かつカッコいい響きに
     title: {
         default: "AI CINEMA HUB - 次世代AI映画・動画の投稿共有プラットフォーム",
@@ -63,12 +64,12 @@ function RootLayout({ children }) {
             children: children
         }, void 0, false, {
             fileName: "[project]/src/app/layout.tsx",
-            lineNumber: 47,
+            lineNumber: 48,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/app/layout.tsx",
-        lineNumber: 46,
+        lineNumber: 47,
         columnNumber: 5
     }, this);
 }

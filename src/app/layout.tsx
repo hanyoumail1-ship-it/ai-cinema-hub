@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://ai-cinema-hub-m53x.vercel.app"), // あなたのVercelのURL
   // 1. タイトル：検索されやすく、かつカッコいい響きに
   title: {
     default: "AI CINEMA HUB - 次世代AI映画・動画の投稿共有プラットフォーム",

@@ -1,34 +1,46 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { movies } from "../data/movies";
 import { Box, User, Film, X, Heart, Search } from "lucide-react";
 import { supabase } from "../lib/supabase";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
-
-export default function Home() {
+function HomeContent() {
+  const searchParams = useSearchParams();
+  const [selectedTag, setSelectedTag] = useState<string | null>(null); 
   const [selectedVideo, setSelectedVideo] = useState<typeof movies[0] | null>(null);
-  const [movieList, setMovieList] = useState(movies); 
+  const [movieList, setMovieList] = useState(movies);
   const [filter, setFilter] = useState<'all' | 'movie' | 'tutorial'>('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTool, setSelectedTool] = useState('all');
-  const [selectedTag, setSelectedTag] = useState('all');
   const [sortBy, setSortBy] = useState<'newest' | 'popular'>('newest');
-    useEffect(() => {
-      const fetchLikes = async () => {        
-        const { data, error } = await supabase.from('movies').select('*');        
-        if (data) { 
-          const missingMovies = movies.filter(m => !data.find(d => d.id === m.id)); 
-          if (missingMovies.length > 0) {
-            const newRows = missingMovies.map(m => ({ id: m.id, likes: 0 }));
-            await supabase.from('movies').insert(newRows);
-            const { data: updatedData } = await supabase.from('movies').select('*');
-        if (updatedData) updateState(updatedData);
-      } else {
-        updateState(data);
-      }
+
+  useEffect(() => {
+    const tagFromUrl = searchParams.get("tag");
+    if (tagFromUrl) {
+      setSelectedTag(tagFromUrl);
     }
-  };        
+  }, [searchParams]);
+  // Supabaseから「いいね」を取得
+  useEffect(() => {
+    const fetchLikes = async () => {
+      const { data } = await supabase.from('movies').select('*');
+      if (data) {        
+          // DBにいない動画があれば追加する処理
+        const missingMovies = movies.filter(m => !data.find(d => d.id === m.id));
+        if (missingMovies.length > 0) {
+          const newRows = missingMovies.map(m => ({ id: m.id, likes: 0 }));
+          await supabase.from('movies').insert(newRows);
+          const { data: updatedData } = await supabase.from('movies').select('*');
+          if (updatedData) updateState(updatedData);
+        } else {
+          updateState(data);
+      }
+    }    
+    const searchParams = useSearchParams();        
+  };          
   const updateState = (dbData: any[]) => {
     const updatedList = movies.map(m => {
       const dbItem = dbData.find(d => d.id === m.id);
@@ -36,8 +48,10 @@ export default function Home() {
     });
     setMovieList(updatedList);
   };
-    fetchLikes();
+
+  fetchLikes();
 }, []); 
+
 const aiTools = [
   { name: 'Luma Dream Machine', url: 'https://lumalabs.ai/', desc: '超リアルな動画生成' },
   { name: 'Runway Gen-3', url: 'https://runwayml.com/', desc: 'プロ御用達の多機能AI' },
@@ -45,7 +59,7 @@ const aiTools = [
   { name: 'Pika Art', url: 'https://pika.art/', desc: 'アニメ・可愛い表現に強い' },
 ];
 
-  // 1. YouTube IDを取得する最強の関数
+  // YouTube IDを取得する最強の関数
   const getYouTubeId = (url: string) => {
     const regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
     const match = url.match(regExp);
@@ -69,31 +83,37 @@ const tagCounts = movieList.reduce((acc, item) => {
   });
   return acc;
 }, {} as Record<string, number>);
+
 const filteredMovies = movieList.filter(movie => {
-      // ① カテゴリが一致するか？
-  const matchesCategory = filter === 'all' || movie.category === filter;
-    // ② タイトルまたは作者名に検索ワードが含まれているか？（大文字小文字を区別しない）
-  const matchesSearch = 
+      // ① カテゴリ
+      const matchesCategory = filter === 'all' || movie.category === filter;
+    // ② 検索
+    const matchesSearch = 
     movie.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
     movie.creator.toLowerCase().includes(searchTerm.toLowerCase());
-    // ③ ツールが一致するか？
-  const matchesTool = selectedTool === 'all' || movie.tool === selectedTool;
-  // ④ ジャンルタグが一致するか？（配列の中に含まれているかチェック）
-  const matchesTag = selectedTag === 'all' || (movie.tags && movie.tags.includes(selectedTag));
-
-  return matchesCategory && matchesSearch && matchesTool && matchesTag;    
-});
-const sortedMovies = [...filteredMovies].sort((a, b) => {
-  if (sortBy === 'popular') {
-    // いいね数で降順（大きい順）に並び替え
-    return b.likes - a.likes;
-  }
-  // 'newest' の場合は元の順序（または日付があれば日付順）
-  return 0; 
-});
+    // ★ タグ
+    const isNoTagSelected = !selectedTag || selectedTag === "all" || selectedTag === "すべて"; 
+    movie.tags?.includes(selectedTag);
+    // ③ ツール
+    const matchesTag = isNoTagSelected || movie.tags?.includes(selectedTag as string);
+    const matchesTool = 
+    !selectedTool ||              // ツールが未選択(null)ならOK
+    selectedTool === "all" ||     // "all" ならOK
+    selectedTool === "すべて" ||   // "すべて" ならOK
+    movie.tool === selectedTool;  // それ以外は、実際のツール名と一致するかチェック
+  
+    return matchesCategory && matchesSearch && matchesTool && matchesTag;    
+  });
+  const sortedMovies = [...filteredMovies].sort((a, b) => {
+    if (sortBy === "newest") {
+     return parseInt(b.id) - parseInt(a.id);
+    }
+     return b.likes - a.likes;
+  });
 
   return (
-    <main className="min-h-screen bg-[#020617] text-white">
+    <div className="min-h-screen bg-[#020617] text-white p-8">         
+    
       {/* --- ヘッダー（ロゴ） --- */}
       <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-black/60 backdrop-blur-md">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
@@ -189,16 +209,12 @@ const sortedMovies = [...filteredMovies].sort((a, b) => {
   </button>
 )}  
   {/* 「すべて」ボタン */}
-  <button
-    onClick={() => setSelectedTool('all')}
-    className={`rounded-full px-4 py-1.5 text-xs font-medium transition-all ${
-      selectedTool === 'all'
-        ? 'bg-gray-200 text-gray-900'
-        : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
-    }`}
-  >
-    All Tools
-  </button>
+  <button 
+  onClick={() => setSelectedTool("all")} 
+  className={selectedTool === "all" ? "active-style" : "normal-style"}
+>
+  All Tools
+</button>
   
   {/* データにあるツールを自動でボタンにする */}
   {Array.from(new Set(movieList.map(m => m.tool))).map((toolName) => (
@@ -221,15 +237,13 @@ const sortedMovies = [...filteredMovies].sort((a, b) => {
   pb-2 : スクロールバーがボタンに被らないように少し下に隙間を作る
   scrollbar-hide : (オプション) スクロールバーを隠してスッキリさせる
 */}
-<div className="flex flex-nowrap overflow-x-auto gap-2 pb-2 mb-6 px-4 md:justify-center scrollbar-hide mx-auto max-w-full">
+<div className="flex flex-wrap gap-2 mb-8 justify-center">
   {/* 「すべて」ボタン */}
   <button 
-      onClick={() => setSelectedTag('all')}
-      className={`flex-shrink-0 px-3 py-1 rounded-md text-xs transition-all ${
-        selectedTag === 'all' ? 'bg-blue-600 text-white' : 'bg-white/5 text-gray-400 hover:text-white'
-      }`}
-    >
-    #すべて ({movieList.length})
+          onClick={() => setSelectedTag(null)}
+          className={`px-4 py-2 rounded-full text-sm ${!selectedTag || selectedTag === "すべて" ? "bg-blue-600" : "bg-white/5"}`}
+        >
+          #すべて
   </button>
   
   {/* 各タグボタン */}
@@ -260,83 +274,91 @@ const sortedMovies = [...filteredMovies].sort((a, b) => {
       ? `https://img.youtube.com/vi/${videoId}/mqdefault.jpg` 
       : "https://via.placeholder.com/480x270/0f172a/ffffff?text=No+Thumbnail");
 
-    return (
-      <div key={movie.id} className="group relative flex flex-col overflow-hidden rounded-xl border border-white/5 bg-[#0f172a] text-left transition-all duration-300 hover:scale-[1.03] hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-500/10">
-        {/* --- カテゴリバッジ --- */}
-      <div className="absolute top-2 left-2 z-10 flex gap-2">
-        <span className={`rounded px-2 py-0.5 text-[10px] font-bold text-white shadow-lg ${
-          movie.category === 'tutorial' ? 'bg-green-600' : 'bg-blue-600'
-        }`}>
-          {movie.category === 'tutorial' ? 'TUTORIAL' : 'MOVIE'}
-        </span>
-      </div>
-      
-        {/* 動画サムネイル部分 */}
-        <button 
-          onClick={() => setSelectedVideo(movie)}
-          className="relative aspect-video w-full overflow-hidden"
+      return (
+        <Link
+          href={`/movie/${movie.id}`}
+          key={movie.id}
+          className="group relative flex flex-col overflow-hidden rounded-xl border border-white/5 bg-[#0f172a] text-left transition-all duration-300 hover:scale-[1.03] hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-500/10"
         >
-          <img
-            src={thumbnailUrl}
-            alt={movie.title}
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-          />
-          <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors" />
-          <div className="absolute bottom-2 right-2 rounded bg-black/60 px-2 py-0.5 text-[10px] backdrop-blur-sm text-white">
-            {movie.type === 'youtube' ? 'YOUTUBE' : 'TIKTOK'}
+          {/* --- カテゴリバッジ --- */}
+          <div className="absolute top-2 left-2 z-10 flex gap-2">
+            <span className={`rounded px-2 py-0.5 text-[10px] font-bold text-white shadow-lg ${
+              movie.category === 'tutorial' ? 'bg-green-600' : 'bg-blue-600'
+            }`}>
+              {movie.category === 'tutorial' ? 'TUTORIAL' : 'MOVIE'}
+            </span>
           </div>
-        </button>
-
-        {/* 情報エリア */}
-        <div className="p-4">
-          <h3 className="line-clamp-2 text-sm font-semibold leading-snug text-white group-hover:text-blue-400 transition-colors">
-            {movie.title}
-          </h3>
-          <div className="mt-3 flex items-center justify-between">
-            <div className="flex items-center gap-1.5 text-xs text-gray-400">
-              <User className="h-3.5 w-3.5" />
-              <span className="truncate max-w-[80px]">{movie.creator}</span>
+      
+          {/* 動画サムネイル部分（buttonからdivに変更） */}
+          <div className="relative aspect-video w-full overflow-hidden">
+            <img
+              src={thumbnailUrl}
+              alt={movie.title}
+              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+            />
+            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors" />
+            <div className="absolute bottom-2 right-2 rounded bg-black/60 px-2 py-0.5 text-[10px] backdrop-blur-sm text-white">
+              {movie.type === 'youtube' ? 'YOUTUBE' : 'TIKTOK'}
             </div>
-            
-            <div className="flex items-center gap-3">
-            <div className="mt-2 flex flex-wrap gap-1">
-  {movie.tags?.map(tag => (
-    <span 
-      key={tag}
-      onClick={(e) => {
-        e.stopPropagation();
-        setSelectedTag(tag);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }}
-      className="cursor-pointer text-[10px] text-gray-500 hover:text-blue-400"
-    >
-      #{tag}
-    </span>
-  ))}
-</div>
-              {/* いいねボタン */}
-              <button
-                 onClick={() => handleLike(movie.id)}
-                 className="flex items-center gap-1 text-xs text-gray-400 hover:text-pink-500 transition-colors group/like">
-                <Heart className="h-3.5 w-3.5 group-hover/like:fill-pink-500" />
-                <span>{movie.likes}</span>
-              </button>
-              
-              <button 
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setSelectedTool(movie.tool);
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                                }}
-                className="rounded-full border border-blue-500/30 bg-blue-500/10 px-2 py-0.5 text-[10px] font-medium text-blue-400 hover:bg-blue-500/20 hover:border-blue-500/50 transition-all"
-              >
+          </div>
+      
+          {/* 情報エリア */}
+          <div className="p-4">
+            <h3 className="line-clamp-2 text-sm font-semibold leading-snug text-white group-hover:text-blue-400 transition-colors">
+              {movie.title}
+            </h3>
+            <div className="mt-3 flex items-center justify-between">
+              <div className="flex items-center gap-1.5 text-xs text-gray-400">
+                <User className="h-3.5 w-3.5" />
+                <span className="truncate max-w-[80px]">{movie.creator}</span>
+              </div>
+      
+              <div className="flex items-center gap-3">
+                <div className="mt-2 flex flex-wrap gap-1">
+                  {movie.tags?.map(tag => (
+                    <span
+                      key={tag}
+                      onClick={(e) => {
+                        e.preventDefault(); // ページ移動を防ぐ
+                        e.stopPropagation(); // 親（Link）にクリックを伝えない
+                        setSelectedTag(tag);
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      }}
+                      className="cursor-pointer text-[10px] text-gray-500 hover:text-blue-400"
+                    >
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+                {/* いいねボタン */}
+                <button
+                  onClick={(e) => {
+                    e.preventDefault(); // ページ移動を防ぐ
+                    e.stopPropagation(); // 親（Link）にクリックを伝えない
+                    handleLike(movie.id);
+                  }}
+                  className="flex items-center gap-1 text-xs text-gray-400 hover:text-pink-500 transition-colors group/like"
+                >
+                  <Heart className="h-3.5 w-3.5 group-hover/like:fill-pink-500" />
+                  <span>{movie.likes}</span>
+                </button>
+      
+                <button
+                  onClick={(e) => {
+                    e.preventDefault(); // ページ移動を防ぐ
+                    e.stopPropagation(); // 親（Link）にクリックを伝えない
+                    setSelectedTool(movie.tool);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="rounded-full border border-blue-500/30 bg-blue-500/10 px-2 py-0.5 text-[10px] font-medium text-blue-400 hover:bg-blue-500/20 hover:border-blue-500/50 transition-all"
+                >
                   #{movie.tool}
-              </button>
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-    );
+        </Link>
+      );
   })}
 </div>
       </div>
@@ -433,6 +455,13 @@ const sortedMovies = [...filteredMovies].sort((a, b) => {
     </div>
   </div>
 )}
-    </main>
+    </div>
+  );
+}
+export default function Home() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#020617]" />}>
+      <HomeContent />
+    </Suspense>
   );
 }
