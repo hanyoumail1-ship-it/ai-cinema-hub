@@ -140,6 +140,7 @@ const movies = [
         title: "遂に人間不要!動画生成AI PIKAを使い倒すぞ!",
         url: "https://www.youtube.com/watch?v=z0lI-Do62rY",
         creator: "Hack Maaa",
+        description: "動画生成AIの枠を超えた、Pikaの驚きの機能を徹底解剖。2枚の画像からその中間の動きを生成する『Pika Frames』や、静止画の人物に特定の服を着せて動かすファッションAIのような活用法まで、全7つの神機能を実演解説しています。動画の一部をサングラスに置き換えるスワップ機能や、アイアンマンのような特殊効果を付与するテクニックなど、遊び心あふれる映像制作に挑戦したい方必見の内容です。",
         tool: "another",
         type: 'youtube',
         tags: [
@@ -231,6 +232,7 @@ const movies = [
         title: "【2025年版】初心者向けRunway完全ガイド イラスト生成・動画生成・うまく作るコツまで",
         url: "https://www.youtube.com/watch?v=1q0LOyUHwYA",
         creator: "AI たろう",
+        description: "AI動画制作の定番ツール『Runway』を、基礎から応用まで徹底マスターできる40分の完全ガイド。アカウント作成や料金プランの選び方はもちろん、イラスト生成から動画化への『黄金ルート』を詳しく解説しています。特に、思ったように動かない時の『イラスト自体の修正』や『プロンプトの削ぎ落とし方』といった実践的なトラブルシューティングは、初心者から一歩抜け出したい方必見のノウハウです。",
         tool: "another",
         type: 'youtube',
         tags: [
@@ -245,11 +247,12 @@ const movies = [
         title: "Dream Machine使い方解説 初心者でも簡単AI動画制作",
         url: "https://www.youtube.com/watch?v=HsDzpFTaZGE",
         creator: "HARUTA",
+        description: "動画生成AI『Luma AI Dream Machine』を、今日から迷わず使いこなすためのスターターガイド。初心者がつまずきやすい独特なインターフェースの解説から、テキストプロンプトによる画像生成、そして驚くほど滑らかな動画への変換方法までを一挙に公開。ビデオモード限定で出現する『カメラ操作』や『ループ設定』など、高品質な映像を作るために欠かせない重要設定も分かりやすくレクチャーされています。",
         tool: "another",
         type: 'youtube',
         tags: [
             "解説",
-            "luma"
+            "luma AI"
         ],
         category: 'tutorial',
         likes: 0
@@ -273,6 +276,7 @@ const movies = [
         title: "Kling AIの使い方を完全解説!プロンプトのコツ&チュートリアルあり",
         url: "https://www.youtube.com/watch?v=MU8HFoxyQ6g",
         creator: "NOMAN AI",
+        description: "話題の動画生成AI『Kling AI』を今日から使いこなしたい方、必見の一本です。テキストから動画を作る基本から、よりクオリティを高めるための『画像からの動画生成（Image to Video）』の手順までを丁寧にレクチャー。プロンプトなしで生成する手軽な方法から、細かな動きを制御するテクニックまで紹介されており、AI動画の可能性を広げたい初心者から中級者まで幅広く役立つ内容です。",
         tool: "another",
         type: 'youtube',
         tags: [
@@ -325,6 +329,37 @@ const movies = [
             "アニメ"
         ],
         category: 'movie',
+        likes: 0
+    },
+    {
+        id: "22",
+        title: "AI動画の“動きの質”が激変。プロが使うカメラワーク&プロンプト超解説【Kling AI】",
+        url: "https://www.youtube.com/watch?v=stgEbOmqL1A",
+        creator: "NOMAN AI",
+        description: "AI動画の『動き』がどこか不自然……そんな悩みを解消し、プロクオリティの映像美を手に入れるための決定版ガイドです。Kling AIのポテンシャルを最大限に引き出すためのカメラワーク術や、AIに意図を正確に伝える『シーンコンテキスト』の考え方を徹底解説。ズームやFPVといった基本から、照明や背景に物語を持たせる高度なプロンプト術まで、一歩先を行くクリエイティブを学びたい方に最適な一本です。",
+        tool: "another",
+        type: 'youtube',
+        tags: [
+            "解説",
+            "Kling AI"
+        ],
+        category: 'tutorial',
+        likes: 0
+    },
+    {
+        id: "23",
+        title: "【プロ級になれる!?】Runway Gen-4.5の最新活用法10選を完全解説します【他にない神機能は●●】",
+        url: "https://www.youtube.com/watch?v=2-UybgJHbyw",
+        creator: "動画編集の中の人",
+        description: "2026年最新版、Runwayの真の実力を引き出す神機能活用術。直感的に動きを指示できる『モーションスケッチ』や、キャラクターの顔を固定して差し替える『キャラクタースワップ』など、他ツールにはない独自機能の使い方を徹底解説しています。実写MVや映画予告編のような、ストーリー性を感じさせる映像制作の流れを体系的に学びたい方に最適なチュートリアル動画です。",
+        tool: "another",
+        type: 'youtube',
+        tags: [
+            "解説",
+            "Runway",
+            "中級・上級"
+        ],
+        category: 'tutorial',
         likes: 0
     }
 ];

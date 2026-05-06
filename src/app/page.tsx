@@ -126,9 +126,11 @@ const filteredMovies = movieList.filter(movie => {
             </div>
             <div className="h-0.5 w-full bg-blue-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
           </div>
-          <button className="rounded-full bg-blue-600 px-4 py-1.5 text-sm font-medium hover:bg-blue-500 transition-colors">
-            投稿する
+          <Link href="/submit">
+          <button className="rounded-full bg-blue-600 px-4 py-1.5 text-sm font-medium hover:bg-blue-500 transition-colors active:scale-95">
+          動画を投稿・推薦する
           </button>
+          </Link>
         </div>
       </header>      
 
@@ -382,7 +384,7 @@ const filteredMovies = movieList.filter(movie => {
           className="w-5 h-5 object-contain"
         />
       </div>
-  
+       
       <div>
         <h3 className="text-sm font-bold text-gray-200 group-hover:text-blue-400 transition-colors">
           {tool.name}
@@ -392,6 +394,19 @@ const filteredMovies = movieList.filter(movie => {
     </a>
   ))}
   </div>
+  <footer className="w-full py-16 border-t border-slate-900 mt-20 text-center text-gray-500 text-sm">
+  <div className="flex justify-center gap-6 mb-4">
+    <Link href="/about"
+    className="text-gray-400 hover:text-blue-400 transition-colors font-medium border-b border-transparent hover:border-blue-400 pb-1"
+    >
+      About
+    </Link>
+  </div>
+  <p className="text-gray-600 text-xs tracking-widest uppercase">
+    © 2026 AI CINEMA HUB
+  </p>
+</footer>
+
 </section>
       {/* --- ポップアップ（モーダル） --- */}
       {selectedVideo && (
@@ -458,6 +473,7 @@ const filteredMovies = movieList.filter(movie => {
     </div>
   );
 }
+
 export default function Home() {
   return (
     <Suspense fallback={<div className="min-h-screen bg-[#020617]" />}>

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ai-cinema-hub-m53x.vercel.app"), // あなたのVercelのURL
@@ -47,7 +48,8 @@ export default function RootLayout({
     <html lang="ja" className="dark">
       <body className="min-h-screen bg-[#020617] text-gray-100 antialiased selection:bg-blue-500/30">
         {children}
-      </body>
+      </body>      
+      <GoogleAnalytics gaId="G-RM2S9DFNJS" />
     </html>
   );
 }

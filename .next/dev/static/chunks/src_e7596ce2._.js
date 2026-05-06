@@ -130,6 +130,7 @@ const movies = [
         title: "遂に人間不要!動画生成AI PIKAを使い倒すぞ!",
         url: "https://www.youtube.com/watch?v=z0lI-Do62rY",
         creator: "Hack Maaa",
+        description: "動画生成AIの枠を超えた、Pikaの驚きの機能を徹底解剖。2枚の画像からその中間の動きを生成する『Pika Frames』や、静止画の人物に特定の服を着せて動かすファッションAIのような活用法まで、全7つの神機能を実演解説しています。動画の一部をサングラスに置き換えるスワップ機能や、アイアンマンのような特殊効果を付与するテクニックなど、遊び心あふれる映像制作に挑戦したい方必見の内容です。",
         tool: "another",
         type: 'youtube',
         tags: [
@@ -221,6 +222,7 @@ const movies = [
         title: "【2025年版】初心者向けRunway完全ガイド イラスト生成・動画生成・うまく作るコツまで",
         url: "https://www.youtube.com/watch?v=1q0LOyUHwYA",
         creator: "AI たろう",
+        description: "AI動画制作の定番ツール『Runway』を、基礎から応用まで徹底マスターできる40分の完全ガイド。アカウント作成や料金プランの選び方はもちろん、イラスト生成から動画化への『黄金ルート』を詳しく解説しています。特に、思ったように動かない時の『イラスト自体の修正』や『プロンプトの削ぎ落とし方』といった実践的なトラブルシューティングは、初心者から一歩抜け出したい方必見のノウハウです。",
         tool: "another",
         type: 'youtube',
         tags: [
@@ -235,11 +237,12 @@ const movies = [
         title: "Dream Machine使い方解説 初心者でも簡単AI動画制作",
         url: "https://www.youtube.com/watch?v=HsDzpFTaZGE",
         creator: "HARUTA",
+        description: "動画生成AI『Luma AI Dream Machine』を、今日から迷わず使いこなすためのスターターガイド。初心者がつまずきやすい独特なインターフェースの解説から、テキストプロンプトによる画像生成、そして驚くほど滑らかな動画への変換方法までを一挙に公開。ビデオモード限定で出現する『カメラ操作』や『ループ設定』など、高品質な映像を作るために欠かせない重要設定も分かりやすくレクチャーされています。",
         tool: "another",
         type: 'youtube',
         tags: [
             "解説",
-            "luma"
+            "luma AI"
         ],
         category: 'tutorial',
         likes: 0
@@ -263,6 +266,7 @@ const movies = [
         title: "Kling AIの使い方を完全解説!プロンプトのコツ&チュートリアルあり",
         url: "https://www.youtube.com/watch?v=MU8HFoxyQ6g",
         creator: "NOMAN AI",
+        description: "話題の動画生成AI『Kling AI』を今日から使いこなしたい方、必見の一本です。テキストから動画を作る基本から、よりクオリティを高めるための『画像からの動画生成（Image to Video）』の手順までを丁寧にレクチャー。プロンプトなしで生成する手軽な方法から、細かな動きを制御するテクニックまで紹介されており、AI動画の可能性を広げたい初心者から中級者まで幅広く役立つ内容です。",
         tool: "another",
         type: 'youtube',
         tags: [
@@ -315,6 +319,37 @@ const movies = [
             "アニメ"
         ],
         category: 'movie',
+        likes: 0
+    },
+    {
+        id: "22",
+        title: "AI動画の“動きの質”が激変。プロが使うカメラワーク&プロンプト超解説【Kling AI】",
+        url: "https://www.youtube.com/watch?v=stgEbOmqL1A",
+        creator: "NOMAN AI",
+        description: "AI動画の『動き』がどこか不自然……そんな悩みを解消し、プロクオリティの映像美を手に入れるための決定版ガイドです。Kling AIのポテンシャルを最大限に引き出すためのカメラワーク術や、AIに意図を正確に伝える『シーンコンテキスト』の考え方を徹底解説。ズームやFPVといった基本から、照明や背景に物語を持たせる高度なプロンプト術まで、一歩先を行くクリエイティブを学びたい方に最適な一本です。",
+        tool: "another",
+        type: 'youtube',
+        tags: [
+            "解説",
+            "Kling AI"
+        ],
+        category: 'tutorial',
+        likes: 0
+    },
+    {
+        id: "23",
+        title: "【プロ級になれる!?】Runway Gen-4.5の最新活用法10選を完全解説します【他にない神機能は●●】",
+        url: "https://www.youtube.com/watch?v=2-UybgJHbyw",
+        creator: "動画編集の中の人",
+        description: "2026年最新版、Runwayの真の実力を引き出す神機能活用術。直感的に動きを指示できる『モーションスケッチ』や、キャラクターの顔を固定して差し替える『キャラクタースワップ』など、他ツールにはない独自機能の使い方を徹底解説しています。実写MVや映画予告編のような、ストーリー性を感じさせる映像制作の流れを体系的に学びたい方に最適なチュートリアル動画です。",
+        tool: "another",
+        type: 'youtube',
+        tags: [
+            "解説",
+            "Runway",
+            "中級・上級"
+        ],
+        category: 'tutorial',
         likes: 0
     }
 ];
@@ -564,9 +599,16 @@ function HomeContent() {
                             lineNumber: 120,
                             columnNumber: 11
                         }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                            className: "rounded-full bg-blue-600 px-4 py-1.5 text-sm font-medium hover:bg-blue-500 transition-colors",
-                            children: "投稿する"
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+                            href: "/submit",
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                className: "rounded-full bg-blue-600 px-4 py-1.5 text-sm font-medium hover:bg-blue-500 transition-colors active:scale-95",
+                                children: "動画を投稿・推薦する"
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/page.tsx",
+                                lineNumber: 130,
+                                columnNumber: 11
+                            }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/app/page.tsx",
                             lineNumber: 129,
@@ -594,7 +636,7 @@ function HomeContent() {
                                 children: "最新のAI動画作品"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/page.tsx",
-                                lineNumber: 138,
+                                lineNumber: 140,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -602,13 +644,13 @@ function HomeContent() {
                                 children: "次世代のクリエイターによるAI映像のハブへようこそ"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/page.tsx",
-                                lineNumber: 139,
+                                lineNumber: 141,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/page.tsx",
-                        lineNumber: 137,
+                        lineNumber: 139,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -620,12 +662,12 @@ function HomeContent() {
                                     className: "h-4 w-4 text-gray-400"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/page.tsx",
-                                    lineNumber: 147,
+                                    lineNumber: 149,
                                     columnNumber: 5
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/page.tsx",
-                                lineNumber: 146,
+                                lineNumber: 148,
                                 columnNumber: 3
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -636,13 +678,13 @@ function HomeContent() {
                                 className: "w-full rounded-full bg-white/5 border border-white/10 py-2 pl-10 pr-4 text-sm text-white placeholder-gray-500 focus:border-blue-500/50 focus:bg-white/10 focus:outline-none focus:ring-1 focus:ring-blue-500/50 transition-all"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/page.tsx",
-                                lineNumber: 149,
+                                lineNumber: 151,
                                 columnNumber: 3
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/page.tsx",
-                        lineNumber: 145,
+                        lineNumber: 147,
                         columnNumber: 1
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -656,7 +698,7 @@ function HomeContent() {
                                     children: "新着順"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/page.tsx",
-                                    lineNumber: 160,
+                                    lineNumber: 162,
                                     columnNumber: 5
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -665,18 +707,18 @@ function HomeContent() {
                                     children: "人気順"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/page.tsx",
-                                    lineNumber: 168,
+                                    lineNumber: 170,
                                     columnNumber: 5
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/page.tsx",
-                            lineNumber: 159,
+                            lineNumber: 161,
                             columnNumber: 3
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/page.tsx",
-                        lineNumber: 158,
+                        lineNumber: 160,
                         columnNumber: 1
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -691,12 +733,12 @@ function HomeContent() {
                                 children: cat === 'all' ? 'すべて' : cat === 'movie' ? '作品' : '解説動画'
                             }, cat, false, {
                                 fileName: "[project]/src/app/page.tsx",
-                                lineNumber: 182,
+                                lineNumber: 184,
                                 columnNumber: 5
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/src/app/page.tsx",
-                        lineNumber: 180,
+                        lineNumber: 182,
                         columnNumber: 1
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -712,7 +754,7 @@ function HomeContent() {
                                 children: "フィルターをリセット"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/page.tsx",
-                                lineNumber: 200,
+                                lineNumber: 202,
                                 columnNumber: 3
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -721,7 +763,7 @@ function HomeContent() {
                                 children: "All Tools"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/page.tsx",
-                                lineNumber: 212,
+                                lineNumber: 214,
                                 columnNumber: 3
                             }, this),
                             Array.from(new Set(movieList.map((m)=>m.tool))).map((toolName)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -733,13 +775,13 @@ function HomeContent() {
                                     ]
                                 }, toolName, true, {
                                     fileName: "[project]/src/app/page.tsx",
-                                    lineNumber: 221,
+                                    lineNumber: 223,
                                     columnNumber: 5
                                 }, this))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/page.tsx",
-                        lineNumber: 196,
+                        lineNumber: 198,
                         columnNumber: 1
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -751,7 +793,7 @@ function HomeContent() {
                                 children: "#すべて"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/page.tsx",
-                                lineNumber: 242,
+                                lineNumber: 244,
                                 columnNumber: 3
                             }, this),
                             Array.from(new Set(movieList.flatMap((m)=>m.tags || []))).map((tag)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -766,13 +808,13 @@ function HomeContent() {
                                     ]
                                 }, tag, true, {
                                     fileName: "[project]/src/app/page.tsx",
-                                    lineNumber: 251,
+                                    lineNumber: 253,
                                     columnNumber: 7
                                 }, this))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/page.tsx",
-                        lineNumber: 240,
+                        lineNumber: 242,
                         columnNumber: 1
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -791,12 +833,12 @@ function HomeContent() {
                                             children: movie.category === 'tutorial' ? 'TUTORIAL' : 'MOVIE'
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/page.tsx",
-                                            lineNumber: 285,
+                                            lineNumber: 287,
                                             columnNumber: 13
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/page.tsx",
-                                        lineNumber: 284,
+                                        lineNumber: 286,
                                         columnNumber: 11
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -808,14 +850,14 @@ function HomeContent() {
                                                 className: "h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/page.tsx",
-                                                lineNumber: 294,
+                                                lineNumber: 296,
                                                 columnNumber: 13
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                 className: "absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/page.tsx",
-                                                lineNumber: 299,
+                                                lineNumber: 301,
                                                 columnNumber: 13
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -823,13 +865,13 @@ function HomeContent() {
                                                 children: movie.type === 'youtube' ? 'YOUTUBE' : 'TIKTOK'
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/page.tsx",
-                                                lineNumber: 300,
+                                                lineNumber: 302,
                                                 columnNumber: 13
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/page.tsx",
-                                        lineNumber: 293,
+                                        lineNumber: 295,
                                         columnNumber: 11
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -840,7 +882,7 @@ function HomeContent() {
                                                 children: movie.title
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/page.tsx",
-                                                lineNumber: 307,
+                                                lineNumber: 309,
                                                 columnNumber: 13
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -853,7 +895,7 @@ function HomeContent() {
                                                                 className: "h-3.5 w-3.5"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/page.tsx",
-                                                                lineNumber: 312,
+                                                                lineNumber: 314,
                                                                 columnNumber: 17
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -861,13 +903,13 @@ function HomeContent() {
                                                                 children: movie.creator
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/page.tsx",
-                                                                lineNumber: 313,
+                                                                lineNumber: 315,
                                                                 columnNumber: 17
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/page.tsx",
-                                                        lineNumber: 311,
+                                                        lineNumber: 313,
                                                         columnNumber: 15
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -892,12 +934,12 @@ function HomeContent() {
                                                                         ]
                                                                     }, tag, true, {
                                                                         fileName: "[project]/src/app/page.tsx",
-                                                                        lineNumber: 319,
+                                                                        lineNumber: 321,
                                                                         columnNumber: 21
                                                                     }, this))
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/page.tsx",
-                                                                lineNumber: 317,
+                                                                lineNumber: 319,
                                                                 columnNumber: 17
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -912,20 +954,20 @@ function HomeContent() {
                                                                         className: "h-3.5 w-3.5 group-hover/like:fill-pink-500"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/app/page.tsx",
-                                                                        lineNumber: 342,
+                                                                        lineNumber: 344,
                                                                         columnNumber: 19
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                         children: movie.likes
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/app/page.tsx",
-                                                                        lineNumber: 343,
+                                                                        lineNumber: 345,
                                                                         columnNumber: 19
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/app/page.tsx",
-                                                                lineNumber: 334,
+                                                                lineNumber: 336,
                                                                 columnNumber: 17
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -945,43 +987,43 @@ function HomeContent() {
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/app/page.tsx",
-                                                                lineNumber: 346,
+                                                                lineNumber: 348,
                                                                 columnNumber: 17
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/page.tsx",
-                                                        lineNumber: 316,
+                                                        lineNumber: 318,
                                                         columnNumber: 15
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/page.tsx",
-                                                lineNumber: 310,
+                                                lineNumber: 312,
                                                 columnNumber: 13
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/page.tsx",
-                                        lineNumber: 306,
+                                        lineNumber: 308,
                                         columnNumber: 11
                                     }, this)
                                 ]
                             }, movie.id, true, {
                                 fileName: "[project]/src/app/page.tsx",
-                                lineNumber: 278,
+                                lineNumber: 280,
                                 columnNumber: 9
                             }, this);
                         })
                     }, void 0, false, {
                         fileName: "[project]/src/app/page.tsx",
-                        lineNumber: 270,
+                        lineNumber: 272,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/page.tsx",
-                lineNumber: 136,
+                lineNumber: 138,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -992,7 +1034,7 @@ function HomeContent() {
                         children: "Creator's Resources"
                     }, void 0, false, {
                         fileName: "[project]/src/app/page.tsx",
-                        lineNumber: 367,
+                        lineNumber: 369,
                         columnNumber: 3
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1011,12 +1053,12 @@ function HomeContent() {
                                             className: "w-5 h-5 object-contain"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/page.tsx",
-                                            lineNumber: 379,
+                                            lineNumber: 381,
                                             columnNumber: 9
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/page.tsx",
-                                        lineNumber: 378,
+                                        lineNumber: 380,
                                         columnNumber: 7
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1026,7 +1068,7 @@ function HomeContent() {
                                                 children: tool.name
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/page.tsx",
-                                                lineNumber: 387,
+                                                lineNumber: 389,
                                                 columnNumber: 9
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1034,30 +1076,63 @@ function HomeContent() {
                                                 children: tool.desc
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/page.tsx",
-                                                lineNumber: 390,
+                                                lineNumber: 392,
                                                 columnNumber: 9
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/page.tsx",
-                                        lineNumber: 386,
+                                        lineNumber: 388,
                                         columnNumber: 7
                                     }, this)
                                 ]
                             }, tool.name, true, {
                                 fileName: "[project]/src/app/page.tsx",
-                                lineNumber: 370,
+                                lineNumber: 372,
                                 columnNumber: 7
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/src/app/page.tsx",
-                        lineNumber: 368,
+                        lineNumber: 370,
+                        columnNumber: 3
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("footer", {
+                        className: "w-full py-16 border-t border-slate-900 mt-20 text-center text-gray-500 text-sm",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "flex justify-center gap-6 mb-4",
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+                                    href: "/about",
+                                    className: "text-gray-400 hover:text-blue-400 transition-colors font-medium border-b border-transparent hover:border-blue-400 pb-1",
+                                    children: "About"
+                                }, void 0, false, {
+                                    fileName: "[project]/src/app/page.tsx",
+                                    lineNumber: 399,
+                                    columnNumber: 5
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/page.tsx",
+                                lineNumber: 398,
+                                columnNumber: 3
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                className: "text-gray-600 text-xs tracking-widest uppercase",
+                                children: "© 2026 AI CINEMA HUB"
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/page.tsx",
+                                lineNumber: 405,
+                                columnNumber: 3
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/app/page.tsx",
+                        lineNumber: 397,
                         columnNumber: 3
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/page.tsx",
-                lineNumber: 366,
+                lineNumber: 368,
                 columnNumber: 1
             }, this),
             selectedVideo && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1072,12 +1147,12 @@ function HomeContent() {
                                 className: "h-6 w-6"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/page.tsx",
-                                lineNumber: 405,
+                                lineNumber: 420,
                                 columnNumber: 9
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/app/page.tsx",
-                            lineNumber: 401,
+                            lineNumber: 416,
                             columnNumber: 7
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1089,7 +1164,7 @@ function HomeContent() {
                                 allowFullScreen: true
                             }, void 0, false, {
                                 fileName: "[project]/src/app/page.tsx",
-                                lineNumber: 413,
+                                lineNumber: 428,
                                 columnNumber: 11
                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("iframe", {
                                 src: `https://www.tiktok.com/embed/v2/${selectedVideo.url.split('/video/')[1]}`,
@@ -1097,12 +1172,12 @@ function HomeContent() {
                                 allow: "fullscreen"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/page.tsx",
-                                lineNumber: 420,
+                                lineNumber: 435,
                                 columnNumber: 11
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/app/page.tsx",
-                            lineNumber: 409,
+                            lineNumber: 424,
                             columnNumber: 7
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1117,7 +1192,7 @@ function HomeContent() {
                                                 children: selectedVideo.title
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/page.tsx",
-                                                lineNumber: 432,
+                                                lineNumber: 447,
                                                 columnNumber: 13
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1130,7 +1205,7 @@ function HomeContent() {
                                                                 className: "h-4 w-4"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/page.tsx",
-                                                                lineNumber: 434,
+                                                                lineNumber: 449,
                                                                 columnNumber: 57
                                                             }, this),
                                                             " ",
@@ -1138,7 +1213,7 @@ function HomeContent() {
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/page.tsx",
-                                                        lineNumber: 434,
+                                                        lineNumber: 449,
                                                         columnNumber: 15
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1146,19 +1221,19 @@ function HomeContent() {
                                                         children: selectedVideo.tool
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/page.tsx",
-                                                        lineNumber: 435,
+                                                        lineNumber: 450,
                                                         columnNumber: 15
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/page.tsx",
-                                                lineNumber: 433,
+                                                lineNumber: 448,
                                                 columnNumber: 13
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/page.tsx",
-                                        lineNumber: 431,
+                                        lineNumber: 446,
                                         columnNumber: 11
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
@@ -1171,36 +1246,36 @@ function HomeContent() {
                                                 className: "h-4 w-4"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/page.tsx",
-                                                lineNumber: 450,
+                                                lineNumber: 465,
                                                 columnNumber: 13
                                             }, this),
                                             selectedVideo.type === 'youtube' ? 'YouTubeで視聴する' : 'TikTokで視聴する'
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/page.tsx",
-                                        lineNumber: 440,
+                                        lineNumber: 455,
                                         columnNumber: 11
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/page.tsx",
-                                lineNumber: 430,
+                                lineNumber: 445,
                                 columnNumber: 9
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/app/page.tsx",
-                            lineNumber: 429,
+                            lineNumber: 444,
                             columnNumber: 7
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/page.tsx",
-                    lineNumber: 399,
+                    lineNumber: 414,
                     columnNumber: 5
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/app/page.tsx",
-                lineNumber: 398,
+                lineNumber: 413,
                 columnNumber: 3
             }, this)
         ]
@@ -1222,17 +1297,17 @@ function Home() {
             className: "min-h-screen bg-[#020617]"
         }, void 0, false, {
             fileName: "[project]/src/app/page.tsx",
-            lineNumber: 463,
+            lineNumber: 479,
             columnNumber: 25
         }, void 0),
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(HomeContent, {}, void 0, false, {
             fileName: "[project]/src/app/page.tsx",
-            lineNumber: 464,
+            lineNumber: 480,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/app/page.tsx",
-        lineNumber: 463,
+        lineNumber: 479,
         columnNumber: 5
     }, this);
 }
