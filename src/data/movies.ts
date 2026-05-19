@@ -92,23 +92,23 @@ export const movies: Movie[] = [
   },
   {
     id: "7",
-    title: "今流行しているAI動画はコレ!『画像から動画生成』人気テンプレートランキング・TOP7",
-    url: "https://www.youtube.com/watch?v=lI3rt9_L8WQ",
-    creator: "Wondershare Filmora 動画編集",
+    title: "完全攻略 2026最新】PC版CapCutの使い方 これ1本でOK・初心者向け・動画編集",
+    url: "https://www.youtube.com/watch?v=v1kG3Hj2178",
+    creator: "JEMMA's style.じぇますた。",
     tool: "another",
     type: 'youtube',
-    tags: ["解説",],
+    tags: ["解説", "CapCut"],
     category: 'tutorial',
     likes: 0
   },
   {
     id: "8",
-    title: "初心者必見!AI実写動画の作り方をわかりやすく紹介します(Pollo AI)",
-    url: "https://www.youtube.com/watch?v=rj8RGyU4_QU",
-    creator: "とうや【AIイラストLab.】",
+    title: "楽してCanvaでショート動画生成!動画編集をAI自動化する作り方【5分完結】",
+    url: "https://www.youtube.com/watch?v=j7Oaq65DTKk",
+    creator: "シュウのCanvaデザインラボ",
     tool: "another",
     type: 'youtube',
-    tags: ["解説",],
+    tags: ["解説", "Canva"],
     category: 'tutorial',
     likes: 0
   },
@@ -290,6 +290,29 @@ export const movies: Movie[] = [
     tags: ["解説", "Runway", "中級・上級"],
     category: 'tutorial',
     likes: 0
-  }
+  },
+  {
+    id: "24",
+      title: "【AI動画】昭和時代を一気に進んでみました",
+      url: "https://www.youtube.com/watch?v=CmgggtmTj-M",
+      creator: "アイマイ",
+      description: "道を進むたび、時代は古く、記憶は深く。 1988年から1926年まで、昭和の街並みを一気に駆け抜ける映像体験。 人々の服装や看板が少しずつ形を変えていく、AIならではのシームレスな歴史改変をお楽しみください。",
+      tool: "Mixed AI",
+      type: 'youtube',
+      tags: ["実写",],
+      category: 'movie',
+      likes: 0
+    },
+    {
+      id: "25",
+        title: "【たぶん世界初】フルAIで日本風・長尺アニメ作ってみた ニンジャ犯科帳「こわいまんじゅう」",
+        url: "https://www.youtube.com/watch?v=-7GqBPlL9J8",
+        creator: "Sakuya - 咲耶",
+        tool: "Mixed AI",
+        type: 'youtube',
+        tags: ["アニメ",],
+        category: 'movie',
+        likes: 0
+      }
 ];
 

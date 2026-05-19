@@ -1,56 +1,107 @@
 "use client";
 
 import { useState, useEffect, Suspense } from "react";
-import { movies } from "../data/movies";
 import { Box, User, Film, X, Heart, Search } from "lucide-react";
 import { supabase } from "../lib/supabase";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
+interface Movie {
+  id: string;
+  title: string;
+  url: string;
+  creator: string;
+  description: string;
+  tool: string;
+  type: string;
+  thumbnailUrl?: string;
+  tags: string[];
+  category: string;
+  likes: number;
+}
+
 function HomeContent() {
   const searchParams = useSearchParams();
   const [selectedTag, setSelectedTag] = useState<string | null>(null); 
-  const [selectedVideo, setSelectedVideo] = useState<typeof movies[0] | null>(null);
-  const [movieList, setMovieList] = useState(movies);
+  const [selectedVideo, setSelectedVideo] = useState<Movie | null>(null);
+  const [movieList, setMovieList] = useState<Movie[]>([]);
+  const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<'all' | 'movie' | 'tutorial'>('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTool, setSelectedTool] = useState('all');
   const [sortBy, setSortBy] = useState<'newest' | 'popular'>('newest');
 
+  const GAS_URL = "https://script.google.com/macros/s/AKfycbypovG7-jZfJlkzhtjkX68UIqcv5P6-W77fl7b3U_7tOorFujl23UEOItQVB5as1Zet8Q/exec";
+
+  // 1. URLからタグを取得する処理
   useEffect(() => {
     const tagFromUrl = searchParams.get("tag");
     if (tagFromUrl) {
       setSelectedTag(tagFromUrl);
     }
   }, [searchParams]);
-  // Supabaseから「いいね」を取得
-  useEffect(() => {
-    const fetchLikes = async () => {
-      const { data } = await supabase.from('movies').select('*');
-      if (data) {        
-          // DBにいない動画があれば追加する処理
-        const missingMovies = movies.filter(m => !data.find(d => d.id === m.id));
-        if (missingMovies.length > 0) {
-          const newRows = missingMovies.map(m => ({ id: m.id, likes: 0 }));
-          await supabase.from('movies').insert(newRows);
-          const { data: updatedData } = await supabase.from('movies').select('*');
-          if (updatedData) updateState(updatedData);
-        } else {
-          updateState(data);
-      }
-    }    
-    const searchParams = useSearchParams();        
-  };          
-  const updateState = (dbData: any[]) => {
-    const updatedList = movies.map(m => {
-      const dbItem = dbData.find(d => d.id === m.id);
-      return dbItem ? { ...m, likes: dbItem.likes } : m;
-    });
-    setMovieList(updatedList);
-  };
 
-  fetchLikes();
-}, []); 
+  // 2. データの初期化（GASから動画取得 ➔ Supabaseでいいね同期）を一気に行う
+  useEffect(() => {
+    const initApp = async () => {
+      try {
+        // --- STEP A: GASから最新の動画リストを取得 ---
+        const response = await fetch(GAS_URL);
+        const fetchedMovies: Movie[] = await response.json();
+
+        // --- STEP B: Supabaseから「いいね」を取得 ---
+        const { data: dbData } = await supabase.from('movies').select('*');
+        
+        let finalMovies = fetchedMovies;
+
+        if (dbData) {
+          // DBにいない動画を特定（fetchedMoviesを基準にする）
+          const missingMovies = fetchedMovies.filter(m => 
+            !dbData.find(d => String(d.id) === String(m.id))
+          );
+
+          if (missingMovies.length > 0) {
+            // DBにいない動画を追加
+            const newRows = missingMovies.map(m => ({ id: m.id, likes: 0 }));
+            await supabase.from('movies').insert(newRows);
+            
+            // 最新のDB情報を再取得
+            const { data: updatedDbData } = await supabase.from('movies').select('*');
+            if (updatedDbData) {
+              finalMovies = mergeLikes(fetchedMovies, updatedDbData);
+            }
+          } else {
+            // 全員揃っていればそのまま合体
+            finalMovies = mergeLikes(fetchedMovies, dbData);
+          }
+        }
+
+        setMovieList(finalMovies);
+      } catch (error) {
+        console.error("初期化に失敗しました:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    // ヘルパー関数：動画リストにDBのいいね数を合成する
+    const mergeLikes = (baseMovies: Movie[], dbData: any[]) => {
+      return baseMovies.map(m => {
+        const dbItem = dbData.find(d => String(d.id) === String(m.id));
+        return dbItem ? { ...m, likes: dbItem.likes } : { ...m, likes: 0 };
+      });
+    };
+
+    initApp();
+  }, []); // ページ読み込み時に1回だけ実行
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-[#020617] text-white">
+        <div className="text-xl font-bold animate-pulse">動画データを読み込み中...</div>
+      </div>
+    );
+  }
 
 const aiTools = [
   { name: 'Luma Dream Machine', url: 'https://lumalabs.ai/', desc: '超リアルな動画生成' },
