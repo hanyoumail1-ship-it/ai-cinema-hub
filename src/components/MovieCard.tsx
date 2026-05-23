@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { Movie } from "../data/movies";
 import { Heart, User, Play } from "lucide-react"; // アイコン用
