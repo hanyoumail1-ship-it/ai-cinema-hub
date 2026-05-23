@@ -1,3 +1,4 @@
+// 現在ここのコードは使っていません
 export type VideoSource = "youtube" | "x";
 
 export interface Movie {

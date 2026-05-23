@@ -1,8 +1,23 @@
 import Link from "next/link";
 import { Movie } from "../data/movies";
 import { Heart, User, Play } from "lucide-react"; // アイコン用
+import { useState, useEffect } from "react";
 
-export default function MovieCard({ movie }: { movie: Movie }) {
+export default function MovieCard({ 
+  movie, 
+  handleLike 
+}: { 
+  movie: Movie; 
+  handleLike?: (id: string) => void;
+}) {
+  const [hasLiked, setHasLiked] = useState(false);
+
+  useEffect(() => {
+    const localId = `liked_movie_${movie.id}`;
+    if (localStorage.getItem(localId) === "true") {
+      setHasLiked(true);
+    }
+  }, [movie.id]);
   return (
     <div className="bg-[#0f172a] rounded-xl overflow-hidden border border-slate-800 hover:border-blue-500/50 transition-all group">
       {/* サムネイル部分 */}

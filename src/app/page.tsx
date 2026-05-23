@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
-import { Box, User, Film, X, Heart, Search } from "lucide-react";
+import { useState, useEffect, Suspense, useRef } from "react";
+import { Box, User, Film, X, Heart, Search, ChevronLeft, ChevronRight } from "lucide-react";
 import { supabase } from "../lib/supabase";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -30,8 +30,21 @@ function HomeContent() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTool, setSelectedTool] = useState('all');
   const [sortBy, setSortBy] = useState<'newest' | 'popular'>('newest');
+  const [hasLiked, setHasLiked] = useState(false);
+  const [likedMovieIds, setLikedMovieIds] = useState<string[]>([]);
+  const tagScrollRef = useRef<HTMLDivElement>(null);
 
   const GAS_URL = "https://script.google.com/macros/s/AKfycbypovG7-jZfJlkzhtjkX68UIqcv5P6-W77fl7b3U_7tOorFujl23UEOItQVB5as1Zet8Q/exec";
+
+  const handleTagScroll = (direction: 'left' | 'right') => {
+    if (tagScrollRef.current) {
+      const scrollAmount = 500; // 1回のクリックで動く距離（ピクセル数。お好みで調整してください）
+      tagScrollRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth' 
+      });
+    }
+  };
 
   // 1. URLからタグを取得する処理
   useEffect(() => {
@@ -40,6 +53,7 @@ function HomeContent() {
       setSelectedTag(tagFromUrl);
     }
   }, [searchParams]);
+  
 
   // 2. データの初期化（GASから動画取得 ➔ Supabaseでいいね同期）を一気に行う
   useEffect(() => {
@@ -75,14 +89,14 @@ function HomeContent() {
             finalMovies = mergeLikes(fetchedMovies, dbData);
           }
         }
-
+        
         setMovieList(finalMovies);
       } catch (error) {
         console.error("初期化に失敗しました:", error);
       } finally {
         setLoading(false);
       }
-    };
+    }; 
 
     // ヘルパー関数：動画リストにDBのいいね数を合成する
     const mergeLikes = (baseMovies: Movie[], dbData: any[]) => {
@@ -94,6 +108,19 @@ function HomeContent() {
 
     initApp();
   }, []); // ページ読み込み時に1回だけ実行
+  
+  // ページ読み込み時に、いいね済みの動画IDをローカルストレージから全て抜き出す
+useEffect(() => {
+  if (movieList.length === 0) return;
+  
+  const savedIds: string[] = [];
+  movieList.forEach(m => {
+    if (localStorage.getItem(`liked_movie_${m.id}`) === "true") {
+      savedIds.push(String(m.id));
+    }
+  });
+  setLikedMovieIds(savedIds);
+}, [movieList]);
 
   if (loading) {
     return (
@@ -116,16 +143,24 @@ const aiTools = [
     const match = url.match(regExp);
     return (match && match[2].length === 11) ? match[2] : null;      
   };
-  const handleLike = async (id: string) => {
-    setMovieList(prev => 
-      prev.map(m => m.id === id ? { ...m, likes: m.likes + 1 } : m)
-    );
-    const { error } = await supabase.rpc('increment_likes', { row_id: id });
   
-  if (error) {
-    console.error("保存に失敗しました:", error);
-  }
-};
+  const handleLike = async (id: string) => {
+    // 1. ブラウザの記憶（LocalStorage）をチェックし、すでにいいね済みの場合は何もしない
+    const localId = `liked_movie_${id}`;
+    if (localStorage.getItem(localId) === "true") return;     
+    // 2. 画面上の数値を即座に +1（型違いエラー防止のため String に変換して比較）
+    setMovieList(prev => 
+      prev.map(m => String(m.id) === String(id) ? { ...m, likes: m.likes + 1 } : m)
+    );  
+    // 3. ブラウザに「この動画はいいねした」という記憶を保存
+    localStorage.setItem(localId, "true");
+    setLikedMovieIds(prev => [...prev, String(id)]);  
+    // 4. Supabaseの数値を+1（視聴ページと完全に合わせるため、Number で数値化して送る！）
+    const { error } = await supabase.rpc('increment_likes', { row_id: Number(id) });  
+    if (error) {
+      console.error("保存に失敗しました:", error);
+    }
+  };
 
 const tagCounts = movieList.reduce((acc, item) => {
   item.tags?.forEach(tag => {
@@ -290,28 +325,57 @@ const filteredMovies = movieList.filter(movie => {
   pb-2 : スクロールバーがボタンに被らないように少し下に隙間を作る
   scrollbar-hide : (オプション) スクロールバーを隠してスッキリさせる
 */}
-<div className="flex flex-wrap gap-2 mb-8 justify-center">
+<div className="relative w-full mb-8 group/tags px-4">
+{/* 左矢印ボタン */}
+<button
+    onClick={() => handleTagScroll('left')}
+    className="absolute left-6 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-slate-900/80 border border-white/10 text-gray-400 hover:text-white hover:bg-slate-800 transition-all duration-200 shadow-xl opacity-0 group-hover/tags:opacity-100 backdrop-blur-sm"
+    aria-label="左にスクロール"
+  >
+    <ChevronLeft size={18} />
+  </button>
+{/* 横スクロール対応のタグエリア */}
+<div 
+    ref={tagScrollRef} 
+    className="flex gap-2 overflow-x-auto whitespace-nowrap pb-3 pt-1 scrollbar-none md:justify-start max-w-full px-6"
+  >
   {/* 「すべて」ボタン */}
   <button 
-          onClick={() => setSelectedTag(null)}
-          className={`px-4 py-2 rounded-full text-sm ${!selectedTag || selectedTag === "すべて" ? "bg-blue-600" : "bg-white/5"}`}
-        >
-          #すべて
-  </button>
+      onClick={() => setSelectedTag(null)}
+      className={`flex-shrink-0 px-4 py-2 rounded-full text-sm transition-all ${
+        !selectedTag || selectedTag === "すべて" 
+          ? "bg-blue-600 text-white font-bold" 
+          : "bg-white/5 text-gray-400 hover:text-white"
+      }`}
+    >
+      #すべて
+    </button>
   
   {/* 各タグボタン */}
   {Array.from(new Set(movieList.flatMap(m => m.tags || []))).map(tag => (
       <button
         key={tag}
         onClick={() => setSelectedTag(tag)}
-        className={`flex-shrink-0 px-3 py-1 rounded-md text-xs transition-all ${
-          selectedTag === tag ? 'bg-blue-600 text-white' : 'bg-white/5 text-gray-400 hover:text-white'
-        }`}
+        className={`flex-shrink-0 px-3 py-2 rounded-full text-xs transition-all ${
+          selectedTag === tag 
+            ? 'bg-blue-600 text-white font-bold' 
+            : 'bg-white/5 text-gray-400 hover:text-white'
+          }`}
       >
         #{tag} ({tagCounts[tag] || 0})
       </button>
     ))}
   </div>
+{/* 右矢印ボタン */}
+<button
+    onClick={() => handleTagScroll('right')}
+    className="absolute right-6 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-slate-900/80 border border-white/10 text-gray-400 hover:text-white hover:bg-slate-800 transition-all duration-200 shadow-xl opacity-0 group-hover/tags:opacity-100 backdrop-blur-sm"
+    aria-label="右にスクロール"
+  >
+    <ChevronRight size={18} />
+  </button>
+</div>
+
 
         {/* --- 動画グリッド --- */}
         {/* grid-cols-1 : 基本（スマホ）は1列
@@ -320,6 +384,7 @@ const filteredMovies = movieList.filter(movie => {
   gap-4 : スマホでは隙間を少し狭く(16px)
   sm:gap-6 : 画面が広くなったら隙間も広く(24px)
 */}
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {sortedMovies.map((movie) => {
     const videoId = getYouTubeId(movie.url);
@@ -383,18 +448,45 @@ const filteredMovies = movieList.filter(movie => {
                     </span>
                   ))}
                 </div>
+
                 {/* いいねボタン */}
+                {(() => {
+                // ★ ループ内で、この動画が「いいね済みリスト」に入っているか調べる
+                const hasLiked = likedMovieIds.includes(String(movie.id));
+                return (
                 <button
-                  onClick={(e) => {
-                    e.preventDefault(); // ページ移動を防ぐ
-                    e.stopPropagation(); // 親（Link）にクリックを伝えない
+                 disabled={hasLiked} // ★すでにいいね済みの場合はボタンを押せなくする
+                 onClick={(e) => {
+                   e.preventDefault(); // ページ移動を防ぐ
+                   e.stopPropagation(); // 親（Link）にクリックを伝えない
+                   if (hasLiked) return;
+
+                   if (handleLike) {
                     handleLike(movie.id);
-                  }}
-                  className="flex items-center gap-1 text-xs text-gray-400 hover:text-pink-500 transition-colors group/like"
-                >
-                  <Heart className="h-3.5 w-3.5 group-hover/like:fill-pink-500" />
-                  <span>{movie.likes}</span>
+                  }
+               
+                   handleLike(movie.id);
+                   setHasLiked(true); // ★押した瞬間にトップページ側の見た目も即座にロック
+                 }}
+                 className={`flex items-center gap-1 text-xs transition-colors group/like ${
+                   hasLiked 
+                     ? "text-pink-500 cursor-default" // ★いいね済みの時は最初からピンク色
+                     : "text-gray-400 hover:text-pink-500" // 未いいねの時
+                 }`}
+               >
+                 <Heart 
+                   className={`h-3.5 w-3.5 ${
+                     hasLiked 
+                       ? "fill-pink-500 text-pink-500" // ★いいね済みの時はハートをピンクで塗りつぶす
+                       : "group-hover/like:fill-pink-500"
+                   }`} 
+                 />
+                 <span className={hasLiked ? "font-bold text-pink-500" : ""}>
+                   {movie.likes}
+                 </span>
                 </button>
+                );
+              })()}
       
                 <button
                   onClick={(e) => {

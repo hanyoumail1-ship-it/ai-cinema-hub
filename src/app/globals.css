@@ -1,4 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+/* Tailwindのクラス「scrollbar-none」の中身を定義 */
+@layer utilities {
+    .scrollbar-none::-webkit-scrollbar {
+      display: none; /* Safari, Chrome 用 */
+    }
+    .scrollbar-none {
+      -ms-overflow-style: none;  /* IE, Edge 用 */
+      scrollbar-width: none;  /* Firefox 用 */
+    }
+  }

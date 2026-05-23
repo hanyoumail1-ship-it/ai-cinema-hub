@@ -1,12 +1,13 @@
 "use client";
 
 import { useState, useEffect, use } from "react";
-import { movies } from "../../../data/movies";
 import Link from "next/link";
-import { notFound } from "next/navigation";
 import { supabase } from "../../../lib/supabase";
 import { Heart, User, ExternalLink, Film } from "lucide-react";
 import MovieCard from "../../../components/MovieCard";
+import { Movie } from "../../../data/movies";
+
+
 
 // --- 補助関数 ---
 const getYouTubeId = (url: string) => {
@@ -24,48 +25,136 @@ export default function MovieDetailPage({ params }: { params: Promise<{ id: stri
   // 1. URLのIDを受け取る（Next.js 15 のルール）
   const resolvedParams = use(params);
   const id = resolvedParams.id;
-  const movie = movies.find((m) => m.id === id);
-  if (!movie) return <div>動画が見つかりません</div>;
-  // 関連動画の抽出
-  const allRelated = movies
-  .filter((m) => m.id !== movie.id)
-  .filter((m) => m.tags.some((tag) => movie.tags.includes(tag)));
-  const relatedMovies = [...allRelated]
-  .sort(() => Math.random() - 0.5) // ランダムに並び替え
-  .slice(0, 3); // 3つだけ取得
-  
-  // 2. いいね数を管理する「箱」
-  const [likes, setLikes] = useState(0);
 
-  // 3. ページが開いた時にデータベースから現在のいいね数を取ってくる
+  // 【修正】データを管理する「箱（State）」を定義
+  const [movie, setMovie] = useState<Movie | null>(null);
+  const [relatedMovies, setRelatedMovies] = useState<Movie[]>([]);
+  const [likes, setLikes] = useState(0);
+  const [isLiking, setIsLiking] = useState(false);
+  const [hasLiked, setHasLiked] = useState(false);
+  const [loading, setLoading] = useState(true); // 読み込み中フラグ
+
+  // トップページと同じGASのURL
+  const GAS_URL = "https://script.google.com/macros/s/AKfycbypovG7-jZfJlkzhtjkX68UIqcv5P6-W77fl7b3U_7tOorFujl23UEOItQVB5as1Zet8Q/exec";
+
+  // 【修正】ページが開いた時（またはIDが変わった時）に、GASとSupabaseからデータを取ってくる
   useEffect(() => {
-    const fetchLikes = async () => {
-      const { data } = await supabase
-        .from('movies')
-        .select('likes')
-        .eq('id', id)
-        .single();
+    if (!id) return;
+
+    const initMovieDetail = async () => {
+      try {
+        setLoading(true);
+
+        // ① GASから最新の全動画データを取得
+        const response = await fetch(GAS_URL);
+        const fetchedMovies: Movie[] = await response.json();
+
+        // ② URLのIDと一致する動画を特定（型違い対策でStringに変換して比較）
+        const foundMovie = fetchedMovies.find((m) => String(m.id) === String(id));
+
+        if (foundMovie) {
+          setMovie(foundMovie);
+
+          // ③ 関連動画の抽出（GASから取った最新データベースで計算）
+          if (foundMovie.tags && Array.isArray(foundMovie.tags)) {
+            const allRelated = fetchedMovies
+              .filter((m) => String(m.id) !== String(foundMovie.id))
+              .filter((m) => m.tags && Array.isArray(m.tags) && m.tags.some((tag) => foundMovie.tags.includes(tag)));
+            
+            // ランダムに並び替えて3つ抽出
+            const randomRelated = [...allRelated]
+              .sort(() => Math.random() - 0.5)
+              .slice(0, 3);
+            
+            setRelatedMovies(randomRelated);
+          }
+
+          // ④ Supabaseから現在のいいね数を取得
+          const numericId = Number(id);
+          const { data, error: fetchError } = await supabase
+  .from('movies')
+  .select('likes')
+  .eq('id', numericId) // 数値で検索
+  .maybeSingle();
+          
+  if (data) {
+    setLikes(data.likes);
+  } 
+  // ブラウザの記憶（LocalStorage）から「この動画IDにいいねしたか」を確認
+const localId = `liked_movie_${id}`;
+const alreadyLiked = localStorage.getItem(localId);
+
+if (alreadyLiked === "true") {
+  setHasLiked(true); // いいね済みなら、状態をtrueにする
+}
+else {
+    // データがなかった場合、数値に直したIDでインサートを試みる
+    const { error: insertError } = await supabase
+      .from('movies')
+      .insert({ id: numericId, likes: 0 });
+      if (insertError) {
+        console.error("【デバッグ】Supabaseへの自動登録に失敗しました:", insertError);
+      } else {
+        console.log("【デバッグ】Supabaseへの自動登録に成功しました");
+      }
       
-      if (data) {
-        setLikes(data.likes);
+      setLikes(0);
+    }
+        } else {
+          setMovie(null);
+        }
+      } catch (error) {
+        console.error("動画詳細データの取得に失敗しました:", error);
+      } finally {
+        setLoading(false);
       }
     };
-    fetchLikes();
+
+    initMovieDetail();
   }, [id]);
 
-  if (!movie) {
-    notFound();
-  }
-
   // 4. いいねボタンを押した時の処理
-  const handleLike = async () => {
+    const handleLike = async () => {
+      if (!id || isLiking || hasLiked) return; // ★すでにいいね済み（hasLikedがtrue）ならここで終了！
+    try {
+      setIsLiking(true); // 処理開始（ボタンをロック）
     // データベースの数字を＋1する
     const { error } = await supabase.rpc('increment_likes', { row_id: id });
     
     if (!error) {
       setLikes(prev => prev + 1); // 成功したら画面の数字も増やす
+      setHasLiked(true); // ★画面上の状態を「いいね済み」に変更
+      localStorage.setItem(`liked_movie_${id}`, "true");// LocalStorageに「この動画はいいねした！」と保存する
     }
-  };
+  } catch (error) {
+    console.error("いいねの更新に失敗しました:", error);
+  } finally {
+    setIsLiking(false); // 処理終了（ボタンのロックを解除）
+  }
+};
+
+  // 【追加】ローディング中の画面表示
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-[#020617] text-white">
+        <div className="text-xl font-bold animate-pulse">動画データを読み込み中...</div>
+      </div>
+    );
+  }
+
+  // 【追加】動画が存在しなかった場合の画面表示
+  if (!movie) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-[#020617] text-white">
+        <div className="text-xl font-bold">動画が見つかりません</div>
+      </div>
+    );
+  }
+
+  // -------------------------------------------------------------
+  // 以下略（これ以降のUIを描画する return 文は、
+  // すべて Stateの `movie` と `relatedMovies` を参照するようになるため、
+  // 元のコードのままでそのまま正常に動作します！）
 
   // 動画プレイヤーの設定
   let embedUrl = "";
@@ -116,11 +205,22 @@ export default function MovieDetailPage({ params }: { params: Promise<{ id: stri
             <div className="flex items-center gap-3">
               {/* --- いいねボタン --- */}
               <button
-                onClick={handleLike}
-                className="flex items-center gap-2 rounded-full bg-pink-500/10 px-6 py-3 text-sm font-bold text-pink-500 transition-all hover:bg-pink-500/20 border border-pink-500/30 active:scale-95 shadow-lg shadow-pink-500/5"
-              >
-                <Heart className={`h-5 w-5 ${likes > 0 ? 'fill-pink-500' : ''}`} />
-                <span>{likes}</span>
+               onClick={handleLike}
+               disabled={isLiking || hasLiked} // ★いいね済みの場合もボタンをクリック不可にする
+               className={`flex items-center gap-2 px-5 py-2.5 rounded-full transition-all duration-200 active:scale-95 text-sm font-bold border ${
+                 hasLiked
+                   ? "bg-rose-500 text-white border-rose-600 cursor-default" // ★いいね済みの色（ピンクに白文字など）
+                   : "bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border-rose-500/30 disabled:opacity-50" // 通常時の色
+               }`}
+             >
+               <Heart 
+                 size={20} 
+                 className={`${hasLiked ? "fill-white" : "fill-rose-500/20"}`} // ★いいね済みならハートを白塗りに
+               />
+               <span>{hasLiked ? "いいねしました" : "いいね！"}</span>
+               <span className="ml-1 bg-black/20 px-2 py-0.5 rounded-full text-xs">
+                 {likes}
+               </span>
               </button>
 
               {/* --- 外部視聴ボタン --- */}
