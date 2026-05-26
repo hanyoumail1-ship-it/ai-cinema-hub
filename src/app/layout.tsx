@@ -3,7 +3,7 @@ import "./globals.css";
 import { GoogleAnalytics } from '@next/third-parties/google';
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://ai-cinema-hub-m53x.vercel.app"), // あなたのVercelのURL
+  metadataBase: new URL("https://ai-cinema-hub.com/"), // あなたのVercelのURL
   // 1. タイトル：検索されやすく、かつカッコいい響きに
   title: {
     default: "AI CINEMA HUB - 次世代AI映画・動画の投稿共有プラットフォーム",
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "AI CINEMA HUB",
     description: "次世代AI映画・動画の投稿共有プラットフォーム",
-    url: "https://ai-cinema-hub-m53x.vercel.app/", // サイトのURL
+    url: "https://ai-cinema-hub.com/", // サイトのURL
     siteName: "AI CINEMA HUB",
     locale: "ja_JP",
     type: "website",
@@ -46,10 +46,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja" className="dark">
+      <head>
+      <meta name='impact-site-verification' content='a8a44c61-4c83-4fe4-b016-718327451f1d' />
+      </head>
       <body className="min-h-screen bg-[#020617] text-gray-100 antialiased selection:bg-blue-500/30">
         {children}
       </body>      
-      <GoogleAnalytics gaId="G-RM2S9DFNJS" />
+      <GoogleAnalytics gaId="G-RM2S9DFNJS" />      
     </html>
   );
 }
