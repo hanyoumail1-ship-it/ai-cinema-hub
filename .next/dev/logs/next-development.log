@@ -1,12 +1,5 @@
-[00:00:02.632] Server  LOG     ✓ Ready in 2s
-[00:00:05.264] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:13.787] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:20:31.845] Server  LOG     ✓ Compiled in 210ms
-[00:27:28.963] Server  LOG     ✓ Compiled in 218ms
-[00:28:47.329] Server  LOG     ✓ Compiled in 52ms
-[00:32:11.706] Server  LOG     ✓ Compiled in 50ms
-[00:34:36.147] Server  LOG     ✓ Compiled in 48ms
-[00:46:11.749] Server  LOG     ✓ Compiled in 96ms
-[00:51:53.049] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:52:49.816] Server  LOG     ✓ Compiled in 48ms
-[00:52:52.747] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:04.449] Server  LOG     ✓ Ready in 3.5s
+[00:00:06.210] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:11.031] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:43.988] Browser ERROR   【デバッグ】Supabaseへの自動登録に失敗しました: {"code":"23505","details":null,"hint":null,"message":"duplicate key value violates unique constraint \"movies_pkey\""}
+[00:00:45.973] Browser ERROR   【デバッグ】Supabaseへの自動登録に失敗しました: {"code":"23505","details":null,"hint":null,"message":"duplicate key value violates unique constraint \"movies_pkey\""}

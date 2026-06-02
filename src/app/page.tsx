@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, Suspense, useRef } from "react";
-import { Box, User, Film, X, Heart, Search, ChevronLeft, ChevronRight } from "lucide-react";
+import { Box, User, Film, X, Heart, Search, ChevronLeft, ChevronRight, ArrowUpRight} from "lucide-react";
 import { supabase } from "../lib/supabase";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -18,6 +18,7 @@ interface Movie {
   tags: string[];
   category: string;
   likes: number;
+  toolUrl?: string;
 }
 
 function HomeContent() {
@@ -513,43 +514,59 @@ const filteredMovies = movieList.filter(movie => {
   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 px-4 max-w-6xl mx-auto">
     {aiTools.map((tool) => (
       <a
-      key={tool.name}
-      href={tool.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group p-4 rounded-xl bg-white/5 border border-white/10 hover:border-blue-500/50 transition-all hover:bg-blue-500/5 flex items-center gap-3"
-    >
-      {/* --- ロゴ表示部分 --- */}
-      <div className="flex-shrink-0 w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center overflow-hidden">
-        <img
-          src={`https://www.google.com/s2/favicons?domain=${new URL(tool.url).hostname}&sz=64`}
-          alt={`${tool.name} logo`}
-          className="w-5 h-5 object-contain"
-        />
-      </div>
-       
-      <div>
-        <h3 className="text-sm font-bold text-gray-200 group-hover:text-blue-400 transition-colors">
-          {tool.name}
-        </h3>
-        <p className="text-[10px] text-gray-500 mt-0.5">{tool.desc}</p>
-      </div>
-    </a>
-  ))}
-  </div>
-  <footer className="w-full py-16 border-t border-slate-900 mt-20 text-center text-gray-500 text-sm">
-  <div className="flex justify-center gap-6 mb-4">
-    <Link href="/about"
-    className="text-gray-400 hover:text-blue-400 transition-colors font-medium border-b border-transparent hover:border-blue-400 pb-1"
-    >
-      About
-    </Link>
-  </div>
-  <p className="text-gray-600 text-xs tracking-widest uppercase">
-    © 2026 AI CINEMA HUB
-  </p>
-</footer>
+        key={tool.name}
+        // ⭕ 2日後にKling AIのアフィリンクが来たらここを差し替えます
+        href={
+          tool.name === 'Kling AI' ? 'https://klingai.com/' : 
+          tool.name === 'Runway Gen-3' ? 'https://runwayml.com/' : 
+          tool.url
+        }
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group p-4 rounded-xl bg-white/5 border border-white/10 hover:border-blue-500/50 transition-all duration-300 hover:bg-blue-500/5 flex items-center justify-between gap-3"
+      >
+        {/* 左側：ロゴとテキストのセット（max-w で右端を確保します） */}
+        <div className="flex items-center gap-3 max-w-[80%]">
+          {/* --- ロゴ表示部分 --- */}
+          <div className="flex-shrink-0 w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center overflow-hidden">
+            <img
+              src={`https://www.google.com/s2/favicons?domain=${new URL(tool.url).hostname}&sz=64`}
+              alt={`${tool.name} logo`}
+              className="w-5 h-5 object-contain"
+            />
+          </div>
+           
+          {/* テキストエリア（truncate で省略表示にします） */}
+          <div className="min-w-0">
+            <h3 className="text-sm font-bold text-gray-200 group-hover:text-blue-400 transition-colors">
+              {tool.name}
+            </h3>
+            {/* ★「truncate」を追加し、長すぎたら自動で「...」にします */}
+            <p className="text-[10px] text-gray-500 mt-0.5 truncate">{tool.desc}</p>
+          </div>
+        </div>
 
+        {/* 右側の矢印アイコン */}
+        <ArrowUpRight 
+          className="text-gray-600 group-hover:text-white transition-all duration-300 w-5 h-5 opacity-0 group-hover:opacity-100 flex-shrink-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" 
+          strokeWidth={2.5} 
+        />
+      </a>
+    ))}
+  </div>
+
+  <footer className="w-full py-16 border-t border-slate-900 mt-20 text-center text-gray-500 text-sm">
+    <div className="flex justify-center gap-6 mb-4">
+      <Link href="/about"
+        className="text-gray-400 hover:text-blue-400 transition-colors font-medium border-b border-transparent hover:border-blue-400 pb-1"
+      >
+        About
+      </Link>
+    </div>
+    <p className="text-gray-600 text-xs tracking-widest uppercase">
+      © 2026 AI CINEMA HUB
+    </p>
+  </footer>
 </section>
       {/* --- ポップアップ（モーダル） --- */}
       {selectedVideo && (
@@ -584,15 +601,31 @@ const filteredMovies = movieList.filter(movie => {
       </div>
 
       {/* 情報とボタン */}
-      <div className="p-6">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div>
-            <h2 className="text-xl font-bold">{selectedVideo.title}</h2>
-            <div className="mt-2 flex items-center gap-3 text-sm text-gray-400">
-              <span className="flex items-center gap-1"><User className="h-4 w-4" /> {selectedVideo.creator}</span>
-              <span className="rounded-md bg-blue-500/10 px-2 py-0.5 text-xs text-blue-400 border border-blue-500/20">{selectedVideo.tool}</span>
-            </div>
-          </div>
+<div className="p-6">
+  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div>
+      <h2 className="text-xl font-bold">{selectedVideo.title}</h2>
+      <div className="mt-2 flex items-center gap-3 text-sm text-gray-400">
+        <span className="flex items-center gap-1">
+          <User className="h-4 w-4" /> {selectedVideo.creator}
+        </span>
+                
+        <a
+          href={selectedVideo.toolUrl || (
+            selectedVideo.tool === 'Kling AI' ? 'https://klingai.com/' :
+            selectedVideo.tool === 'Runway' ? 'https://runwayml.com/' :
+            selectedVideo.tool === 'Pika' ? 'https://pika.art/' :
+            'https://lumalabs.ai/dream-machine'
+          )}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="rounded-md bg-blue-500/10 px-2 py-0.5 text-xs text-blue-400 border border-blue-500/20 hover:bg-blue-500/20 hover:text-white transition-all duration-200 cursor-pointer flex items-center gap-1"
+          title={`${selectedVideo.tool}の公式サイトを開く`}
+        >
+          {selectedVideo.tool} <span className="text-[10px] opacity-60">↗</span>
+        </a>
+      </div>
+    </div>
           
           {/* ボタンの文字と色を動的に変更 */}
           <a 

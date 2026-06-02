@@ -14,7 +14,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$next$2f$th
 ;
 ;
 const metadata = {
-    metadataBase: new URL("https://ai-cinema-hub-m53x.vercel.app"),
+    metadataBase: new URL("https://ai-cinema-hub.com/"),
     // 1. タイトル：検索されやすく、かつカッコいい響きに
     title: {
         default: "AI CINEMA HUB - 次世代AI映画・動画の投稿共有プラットフォーム",
@@ -35,7 +35,7 @@ const metadata = {
     openGraph: {
         title: "AI CINEMA HUB",
         description: "次世代AI映画・動画の投稿共有プラットフォーム",
-        url: "https://ai-cinema-hub-m53x.vercel.app/",
+        url: "https://ai-cinema-hub.com/",
         siteName: "AI CINEMA HUB",
         locale: "ja_JP",
         type: "website",
@@ -62,19 +62,33 @@ function RootLayout({ children }) {
         lang: "ja",
         className: "dark",
         children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("head", {
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("meta", {
+                    name: "impact-site-verification",
+                    content: "a8a44c61-4c83-4fe4-b016-718327451f1d"
+                }, void 0, false, {
+                    fileName: "[project]/src/app/layout.tsx",
+                    lineNumber: 50,
+                    columnNumber: 7
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/src/app/layout.tsx",
+                lineNumber: 49,
+                columnNumber: 7
+            }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("body", {
                 className: "min-h-screen bg-[#020617] text-gray-100 antialiased selection:bg-blue-500/30",
                 children: children
             }, void 0, false, {
                 fileName: "[project]/src/app/layout.tsx",
-                lineNumber: 49,
+                lineNumber: 52,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$next$2f$third$2d$parties$2f$dist$2f$google$2f$index$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["GoogleAnalytics"], {
                 gaId: "G-RM2S9DFNJS"
             }, void 0, false, {
                 fileName: "[project]/src/app/layout.tsx",
-                lineNumber: 52,
+                lineNumber: 55,
                 columnNumber: 7
             }, this)
         ]

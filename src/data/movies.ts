@@ -13,6 +13,7 @@ export interface Movie {
   likes: number;
   category: 'movie' | 'tutorial';
   tags: string[];
+  toolUrl?: string;
   }
 
 export const movies: Movie[] = [
