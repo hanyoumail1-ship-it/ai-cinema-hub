@@ -515,9 +515,8 @@ const filteredMovies = movieList.filter(movie => {
     {aiTools.map((tool) => (
       <a
         key={tool.name}
-        // ⭕ 2日後にKling AIのアフィリンクが来たらここを差し替えます
-        href={
-          tool.name === 'Kling AI' ? 'https://klingai.com/' : 
+                href={
+          tool.name === 'Kling AI' ? 'https://klingaiaffiliate.pxf.io/c/7346287/2780725/31828' : 
           tool.name === 'Runway Gen-3' ? 'https://runwayml.com/' : 
           tool.url
         }

@@ -1,5 +1,10 @@
-[00:00:04.449] Server  LOG     ✓ Ready in 3.5s
-[00:00:06.210] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:11.031] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:43.988] Browser ERROR   【デバッグ】Supabaseへの自動登録に失敗しました: {"code":"23505","details":null,"hint":null,"message":"duplicate key value violates unique constraint \"movies_pkey\""}
-[00:00:45.973] Browser ERROR   【デバッグ】Supabaseへの自動登録に失敗しました: {"code":"23505","details":null,"hint":null,"message":"duplicate key value violates unique constraint \"movies_pkey\""}
+[00:00:01.122] Server  LOG     ✓ Ready in 777ms
+[00:00:13.363] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:06:05.532] Server  LOG     ✓ Compiled in 73ms
+[00:24:12.466] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:24:23.284] Browser ERROR   【デバッグ】Supabaseへの自動登録に失敗しました: {"code":"23505","details":null,"hint":null,"message":"duplicate key value violates unique constraint \"movies_pkey\""}
+[00:24:24.817] Browser ERROR   【デバッグ】Supabaseへの自動登録に失敗しました: {"code":"23505","details":null,"hint":null,"message":"duplicate key value violates unique constraint \"movies_pkey\""}
+[00:29:28.433] Browser ERROR   【デバッグ】Supabaseへの自動登録に失敗しました: {"code":"23505","details":null,"hint":null,"message":"duplicate key value violates unique constraint \"movies_pkey\""}
+[00:29:33.550] Browser ERROR   【デバッグ】Supabaseへの自動登録に失敗しました: {"code":"23505","details":null,"hint":null,"message":"duplicate key value violates unique constraint \"movies_pkey\""}
+[00:32:07.636] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:32:11.608] Browser ERROR   【デバッグ】Supabaseへの自動登録に失敗しました: {"code":"23505","details":null,"hint":null,"message":"duplicate key value violates unique constraint \"movies_pkey\""}
